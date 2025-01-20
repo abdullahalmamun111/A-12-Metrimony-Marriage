@@ -5,6 +5,9 @@ import Dashboard from '../Dashboard/Dashboard';
 import Login from '../Pages/Login';
 import Signup from '../Pages/Signup';
 import Home from '../Components/Home';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import Biodata from '../Pages/Biodata';
+import EditBiodata from '../Dashboard-Pages/EditBiodata';
 
 
 
@@ -25,14 +28,21 @@ import Home from '../Components/Home';
 				path: 'signup',
 				element: <Signup></Signup>
 			},
+			{
+				path: 'biodatas',
+				element:<PrivateRoute><Biodata></Biodata></PrivateRoute>
+			}
 			
 		  ]
 		},
 		{
 			path:'dashboard',
-			element: <Dashboard></Dashboard>,
+			element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
 			children: [
-
+				{
+					path:'/dashboard/biodata',
+					element: <EditBiodata></EditBiodata>
+				}
 			]
 		}
 	  ]);

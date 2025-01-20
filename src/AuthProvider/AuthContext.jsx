@@ -49,12 +49,12 @@ const AuthContext = ({ children }) => {
 		   })
 	 }
 
-	 useEffect(() => {
-		onAuthStateChanged(auth,currentUser => {
-			setUser(currentUser)
-			setLoading(false)
-		})
-	 })
+	//  useEffect(() => {
+	// 	onAuthStateChanged(auth,currentUser => {
+	// 		setUser(currentUser)
+	// 		setLoading(false)
+	// 	})
+	//  })
 
 	 useEffect(() =>{
 	 	const unsubsCribe = onAuthStateChanged(auth,currentUser => {
