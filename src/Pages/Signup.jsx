@@ -3,8 +3,10 @@ import signUpImg from "../assets/signUp.jpg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { ContextApi } from "../AuthProvider/AuthContext";
+import usePublic from "../Hooks/usePublic";
 
 const Signup = () => {
+  const axiosPublic = usePublic();
   const location = useLocation();
   const navigate = useNavigate();
   const { createUser, googleSignIn, updateUserProfile } =
@@ -30,13 +32,24 @@ const Signup = () => {
     const email = form.email.value;
     const password = form.password.value;
     createUser(email, password).then((result) => {
-      updateUserProfile(name, photo).then((result) => {
-        Swal.fire({
-          title: "Success!",
-          text: "Your Sign Up Sucessfull",
-          icon: "success",
-        });
-        navigate(location.state ? location.state : "/");
+      updateUserProfile(name, photo)
+      .then((result) => {
+        const userInfo = {
+            name,
+            email
+        }
+
+        axiosPublic.post('/users', userInfo)
+        .then(res => {
+            if(res.data.insertedId){
+                Swal.fire({
+                    title: "Success!",
+                    text: "Your Sign Up Sucessfull",
+                    icon: "success",
+                  });
+                  navigate(location.state ? location.state : "/");
+            }
+        })
       });
     });
   };
