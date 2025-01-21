@@ -8,6 +8,7 @@ import Home from '../Components/Home';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import Biodata from '../Pages/Biodata';
 import EditBiodata from '../Dashboard-Pages/EditBiodata';
+import Details from '../Components/Details';
 
 
 
@@ -31,6 +32,11 @@ import EditBiodata from '../Dashboard-Pages/EditBiodata';
 			{
 				path: 'biodatas',
 				element:<PrivateRoute><Biodata></Biodata></PrivateRoute>
+			},
+			{
+				path: 'biodatas/details/:id',
+				element: <PrivateRoute><Details></Details></PrivateRoute>,
+				loader: ({params}) => fetch(`http://localhost:5000/details/${params.id}`)
 			}
 			
 		  ]

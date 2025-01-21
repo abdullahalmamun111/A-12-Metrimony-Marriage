@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useAllUser from '../Hooks/useAllUser';
+import { Link } from 'react-router-dom';
 
 const BiodatasPage = () => {
     const { allUser } = useAllUser();
@@ -138,9 +139,11 @@ const BiodatasPage = () => {
                             <p>
                                 <strong>Occupation:</strong> {user.occupation}
                             </p>
+                            <Link to={`details/${user._id}`}>
                             <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded w-full text-center">
                                 View Profile
                             </button>
+                            </Link>
                         </div>
                     ))}
                 </div>
