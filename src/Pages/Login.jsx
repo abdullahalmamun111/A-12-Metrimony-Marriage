@@ -3,15 +3,22 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginImg from "../assets/login.jpg";
 import Swal from "sweetalert2";
 import { ContextApi } from "../AuthProvider/AuthContext";
+import usePublic from "../Hooks/usePublic";
 
 const Login = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const {googleSignIn,signIn} = useContext(ContextApi);
+  const axiosPublic = usePublic();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { googleSignIn, signIn } = useContext(ContextApi);
 
-    // google sign In
-    const handleGoogleLogin = () => {
-      googleSignIn().then((result) => {
+  // google sign In
+  const handleGoogleLogin = () => {
+    googleSignIn().then((result) => {
+      const userInfo = {
+        name: result.user?.displayName,
+        email: result.user?.email,
+      };
+      axiosPublic.post("/users", userInfo).then((res) => {
         Swal.fire({
           title: "Success!",
           text: "Your Sign Up Sucessfull",
@@ -19,15 +26,16 @@ const Login = () => {
         });
         navigate(location.state ? location.state : "/");
       });
-    };
+    });
+  };
 
-    // sign in with email and password
-    const handleSignIn = (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const email = form.email.value;
-      const password = form.password.value;
-      signIn(email,password)
+  // sign in with email and password
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    signIn(email, password)
       .then((result) => {
         Swal.fire({
           title: "Success!",
@@ -43,7 +51,7 @@ const Login = () => {
           icon: "error",
         });
       });
-    }
+  };
 
   return (
     <div className="min-h-screen my-4 py-4 bg-gray-100 flex items-center justify-center px-4 lg:px-20">
@@ -84,9 +92,7 @@ const Login = () => {
             </div>
             {/* Login Button */}
             <div>
-              <button
-                className="w-full bg-blue-600 text-white font-medium py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
+              <button className="w-full bg-blue-600 text-white font-medium py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 Sign In
               </button>
             </div>
@@ -94,14 +100,14 @@ const Login = () => {
 
           {/* back to home button */}
           <div>
-           <Link to={'/'}>
-		   <button
-              type="submit"
-              className="w-full mt-4 bg-blue-600 text-white font-medium py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-             Back To Home
-            </button>
-		   </Link>
+            <Link to={"/"}>
+              <button
+                type="submit"
+                className="w-full mt-4 bg-blue-600 text-white font-medium py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                Back To Home
+              </button>
+            </Link>
           </div>
           {/* Additional Options */}
           <div className="mt-6 text-center">

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import Swal from "sweetalert2";
 import { ContextApi } from "../AuthProvider/AuthContext";
+import useSecure from "../Hooks/useSecure";
 
 const divisions = [
   "Dhaka",
@@ -18,8 +19,9 @@ const occupations = ["Student", "Engineer", "Doctor", "Business", "Other"];
 const races = ["Fair", "Medium", "Dark"];
 
 const EditBiodata = () => {
-  const {user} = useContext(ContextApi)
-  const [mode, setMode] = useState(""); // "create" or "update"
+  const axiosSecure = useSecure();
+  const { user } = useContext(ContextApi);
+  const [mode, setMode] = useState(""); // "create"
   const [formData, setFormData] = useState({
     biodataType: "",
     name: "",
@@ -37,8 +39,7 @@ const EditBiodata = () => {
     partnerAge: "",
     partnerHeight: "",
     partnerWeight: "",
-    email: user.email, // Replace this with dynamic user email
-    mobileNumber: "",
+    email: user.email,
   });
 
   const handleInputChange = (e) => {
@@ -48,7 +49,15 @@ const EditBiodata = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-	
+    axiosSecure.post("/biodata", formData).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire({
+          title: "Done!",
+          text: `Bio Added Successfully!`,
+          icon: "success",
+        });
+      }
+    });
     // Reset form
     setFormData({
       biodataType: "",
@@ -68,7 +77,6 @@ const EditBiodata = () => {
       partnerHeight: "",
       partnerWeight: "",
       email: user.email,
-      mobileNumber: "",
     });
     setMode("");
   };
@@ -79,23 +87,17 @@ const EditBiodata = () => {
         <div className="flex flex-col items-center">
           <button
             onClick={() => setMode("create")}
-            className="w-1/2 bg-blue-500 text-white py-2 px-4 rounded-md shadow hover:bg-blue-600 mb-4"
+            className="w-1/2 bg-blue-500 text-white py-2 px-4 rounded-md shadow hover:bg-blue-600"
           >
             Create Your Biodata
-          </button>
-          <button
-            onClick={() => setMode("update")}
-            className="w-1/2 bg-green-500 text-white py-2 px-4 rounded-md shadow hover:bg-green-600"
-          >
-            Update Your Biodata
           </button>
         </div>
       )}
 
-      {mode && (
+      {mode === "create" && (
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
           <h1 className="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
-            {mode === "create" ? "Create Your Biodata" : "Update Your Biodata"}
+            Create Your Biodata
           </h1>
 
           <form onSubmit={handleSubmit}>
@@ -105,7 +107,7 @@ const EditBiodata = () => {
                 Biodata Type <span className="text-red-500">*</span>
               </label>
               <select
-			  	required
+                required
                 name="biodataType"
                 value={formData.biodataType}
                 onChange={handleInputChange}
@@ -123,7 +125,7 @@ const EditBiodata = () => {
                 Name <span className="text-red-500">*</span>
               </label>
               <input
-			  required
+                required
                 type="text"
                 name="name"
                 value={formData.name}
@@ -139,7 +141,7 @@ const EditBiodata = () => {
                 Profile Image Link or Image
               </label>
               <input
-			  required
+                required
                 type="text"
                 name="profileImage"
                 value={formData.profileImage}
@@ -155,7 +157,7 @@ const EditBiodata = () => {
                 Date of Birth <span className="text-red-500">*</span>
               </label>
               <input
-			  required
+                required
                 type="date"
                 name="dateOfBirth"
                 value={formData.dateOfBirth}
@@ -170,7 +172,7 @@ const EditBiodata = () => {
                 Height <span className="text-red-500">*</span>
               </label>
               <select
-			  required
+                required
                 name="height"
                 value={formData.height}
                 onChange={handleInputChange}
@@ -191,7 +193,7 @@ const EditBiodata = () => {
                 Weight <span className="text-red-500">*</span>
               </label>
               <select
-			  required
+                required
                 name="weight"
                 value={formData.weight}
                 onChange={handleInputChange}
@@ -210,7 +212,7 @@ const EditBiodata = () => {
             <div className="mb-4">
               <label className="block text-gray-700 font-medium">Age</label>
               <input
-			  required
+                required
                 type="number"
                 name="age"
                 value={formData.age}
@@ -227,7 +229,7 @@ const EditBiodata = () => {
               </label>
               <select
                 name="occupation"
-				required
+                required
                 value={formData.occupation}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -247,7 +249,7 @@ const EditBiodata = () => {
                 Race <span className="text-red-500">*</span> (Skin color)
               </label>
               <select
-			  required
+                required
                 name="race"
                 value={formData.race}
                 onChange={handleInputChange}
@@ -268,10 +270,10 @@ const EditBiodata = () => {
                 Father's Name
               </label>
               <input
-			  required
+                required
                 type="text"
-                name="fathersName"
-                value={formData.fathersName}
+                name="fatherName"
+                // value={formData.fatherName}
                 onChange={handleInputChange}
                 placeholder="Enter father's name"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -285,9 +287,9 @@ const EditBiodata = () => {
               </label>
               <input
                 type="text"
-				required
-                name="mothersName"
-                value={formData.mothersName}
+                required
+                name="motherName"
+                // value={formData.motherName}
                 onChange={handleInputChange}
                 placeholder="Enter mother's name"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -300,9 +302,9 @@ const EditBiodata = () => {
                 Permanent Division <span className="text-red-500">*</span>
               </label>
               <select
-			  required
+                required
                 name="permanentDivision"
-                value={formData.permanentDivision}
+                // value={formData.permanentDivision}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
@@ -323,7 +325,7 @@ const EditBiodata = () => {
                 Present Division <span className="text-red-500">*</span>
               </label>
               <select
-			  required
+                required
                 name="presentDivision"
                 value={formData.presentDivision}
                 onChange={handleInputChange}
@@ -346,10 +348,10 @@ const EditBiodata = () => {
                 Expected Partner Age
               </label>
               <input
-			  required
+                required
                 type="number"
-                name="expectedPartnerAge"
-                value={formData.expectedPartnerAge}
+                name="partnerAge"
+                // value={formData.partnerAge}
                 onChange={handleInputChange}
                 placeholder="Enter expected partner's age"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -362,9 +364,9 @@ const EditBiodata = () => {
                 Expected Partner Height <span className="text-red-500">*</span>
               </label>
               <select
-			  required
-                name="expectedPartnerHeight"
-                value={formData.expectedPartnerHeight}
+                required
+                name="partnerHeight"
+                // value={formData.partnerHeight}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
@@ -383,9 +385,9 @@ const EditBiodata = () => {
                 Expected Partner Weight <span className="text-red-500">*</span>
               </label>
               <select
-			  required
-                name="expectedPartnerWeight"
-                value={formData.expectedPartnerWeight}
+                required
+                name="partnerWeight"
+                // value={formData.partnerWeight}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
@@ -418,10 +420,10 @@ const EditBiodata = () => {
                 Mobile Number <span className="text-red-500">*</span>
               </label>
               <input
-			  required
+                required
                 type="text"
                 name="mobile"
-                value={formData.mobile}
+                // value={formData.mobileNumber}
                 onChange={handleInputChange}
                 placeholder="Enter mobile number"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"

@@ -14,13 +14,21 @@ const Signup = () => {
 
   // google sign In
   const handleGoogleLogin = () => {
-    googleSignIn().then((result) => {
-      Swal.fire({
-        title: "Success!",
-        text: "Your Sign Up Sucessfull",
-        icon: "success",
-      });
-      navigate(location.state ? location.state : "/");
+    googleSignIn()
+    .then((result) => {
+        const userInfo = {
+            name: result.user?.displayName,
+            email : result.user?.email,
+          }
+          axiosPublic.post('/users', userInfo)
+          .then(res => {
+            Swal.fire({
+              title: "Success!",
+              text: "Your Sign Up Sucessfull",
+              icon: "success"
+            });
+            navigate(location.state? location.state :'/');
+          })
     });
   };
 
