@@ -5,7 +5,7 @@ const useUser = () => {
 	const [user, setUser] = useState([]);
 
 	useEffect(()=> {
-		fetch('http://localhost:5000/user')
+		fetch('http://localhost:5000/sixBiodata')
 		.then(res => res.json())
 		.then(data => {
 			setUser(data)
@@ -17,3 +17,4 @@ const useUser = () => {
 };
 
 export default useUser;
+
