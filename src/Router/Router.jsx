@@ -10,6 +10,7 @@ import Biodata from '../Pages/Biodata';
 import EditBiodata from '../Dashboard-Pages/EditBiodata';
 import Details from '../Components/Details';
 import Myfavourites from '../Components/Myfavourites';
+import Payment from '../Components/Payment';
 
 
 
@@ -43,8 +44,12 @@ import Myfavourites from '../Components/Myfavourites';
 				path: '/details/:id',
 				element: <PrivateRoute><Details></Details></PrivateRoute>,
 				loader: ({params}) => fetch(`http://localhost:5000/details/${params.id}`)
+			},
+			{
+				path:'/checkout/:id',
+				element: <PrivateRoute><Payment></Payment></PrivateRoute>,
+				loader: ({params}) => fetch(`http://localhost:5000/details/${params.id}`)
 			}
-
 			
 		  ]
 		},
@@ -60,6 +65,7 @@ import Myfavourites from '../Components/Myfavourites';
 					path: '/dashboard/favourites',
 					element: <PrivateRoute><Myfavourites></Myfavourites></PrivateRoute>
 				}
+				
 			]
 		}
 	  ]);

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import useAllUser from "../Hooks/useAllUser";
 import { ContextApi } from "../AuthProvider/AuthContext";
 import useSecure from "../Hooks/useSecure";
@@ -64,7 +64,7 @@ const Details = () => {
 
   // Handle Request Contact Information
   const handleRequestContactInfo = () => {
-    navigate(`/checkout/${biodataId}`);
+    // navigate(`/checkout/${biodataId}`);
   };
 
   return (
@@ -149,12 +149,14 @@ const Details = () => {
 
         {/* Request Contact Information Button */}
         {!premium && (
-          <button
+          <Link to={`/checkout/${_id}`}>
+		  <button
             onClick={handleRequestContactInfo}
             className="mt-4 bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600 ml-4"
           >
             Request Contact Information
           </button>
+		  </Link>
         )}
       </div>
 
