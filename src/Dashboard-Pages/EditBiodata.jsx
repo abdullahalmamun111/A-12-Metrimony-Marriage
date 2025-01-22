@@ -21,7 +21,6 @@ const races = ["Fair", "Medium", "Dark"];
 const EditBiodata = () => {
   const axiosSecure = useSecure();
   const { user } = useContext(ContextApi);
-  const [mode, setMode] = useState(""); // "create"
   const [formData, setFormData] = useState({
     biodataType: "",
     name: "",
@@ -49,7 +48,8 @@ const EditBiodata = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axiosSecure.post("/biodata", formData).then((res) => {
+    axiosSecure.post("/biodata", formData)
+    .then((res) => {
       if (res.data.insertedId) {
         Swal.fire({
           title: "Done!",
@@ -78,23 +78,12 @@ const EditBiodata = () => {
       partnerWeight: "",
       email: user.email,
     });
-    setMode("");
   };
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
-      {!mode && (
-        <div className="flex flex-col items-center">
-          <button
-            onClick={() => setMode("create")}
-            className="w-1/2 bg-blue-500 text-white py-2 px-4 rounded-md shadow hover:bg-blue-600"
-          >
-            Create Your Biodata
-          </button>
-        </div>
-      )}
+    
 
-      {mode === "create" && (
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
           <h1 className="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
             Create Your Biodata
@@ -439,7 +428,7 @@ const EditBiodata = () => {
             </button>
           </form>
         </div>
-      )}
+      
     </div>
   );
 };

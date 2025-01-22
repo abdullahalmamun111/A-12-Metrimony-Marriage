@@ -9,6 +9,7 @@ import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import Biodata from '../Pages/Biodata';
 import EditBiodata from '../Dashboard-Pages/EditBiodata';
 import Details from '../Components/Details';
+import Myfavourites from '../Components/Myfavourites';
 
 
 
@@ -37,7 +38,13 @@ import Details from '../Components/Details';
 				path: 'biodatas/details/:id',
 				element: <PrivateRoute><Details></Details></PrivateRoute>,
 				loader: ({params}) => fetch(`http://localhost:5000/details/${params.id}`)
+			},
+			{
+				path: '/details/:id',
+				element: <PrivateRoute><Details></Details></PrivateRoute>,
+				loader: ({params}) => fetch(`http://localhost:5000/details/${params.id}`)
 			}
+
 			
 		  ]
 		},
@@ -47,7 +54,11 @@ import Details from '../Components/Details';
 			children: [
 				{
 					path:'/dashboard/biodata',
-					element: <EditBiodata></EditBiodata>
+					element: <PrivateRoute><EditBiodata></EditBiodata></PrivateRoute>
+				},
+				{
+					path: '/dashboard/favourites',
+					element: <PrivateRoute><Myfavourites></Myfavourites></PrivateRoute>
 				}
 			]
 		}

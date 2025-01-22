@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const UserCard = ({ item }) => {
-  const { profileImage, biodataId, biodataType, age, occupation, permanentDivision } = item;
+  const {_id, profileImage, biodataId, biodataType, age, occupation, permanentDivision } = item;
 
   return (
     <div className="relative max-w-md bg-white rounded-lg shadow-lg overflow-hidden">
@@ -24,12 +25,13 @@ const UserCard = ({ item }) => {
         <p className="text-gray-600">Age: {age} years</p>
         <p className="text-gray-600">Occupation: {occupation}</p>
         <p className="text-gray-600">Division: {permanentDivision}</p>
+        <Link to={`details/${_id}`}>
         <button
           className="mt-4 px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold rounded-lg shadow hover:from-green-500 hover:to-blue-600 transition-colors duration-300"
-          onClick={() => alert(`Viewing profile of Biodata ID: ${biodataId}`)}
         >
           View Profile
         </button>
+        </Link>
       </div>
     </div>
   );
