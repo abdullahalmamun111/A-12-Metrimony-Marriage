@@ -1,33 +1,46 @@
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import useSecure from '../Hooks/useSecure';
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import useSecure from "../Hooks/useSecure";
+import Swal from "sweetalert2";
 
 const Myfavourites = () => {
   const axiosSecure = useSecure();
 
   // Fetch favourites data using TanStack Query
   const { data: favourites = [], refetch } = useQuery({
-    queryKey: ['favourites'],
+    queryKey: ["favourites"],
     queryFn: async () => {
-      const res = await axiosSecure.get('/favourites');
+      const res = await axiosSecure.get("/favourites");
       return res.data;
     },
   });
 
   // Handle delete action
-  const handleDelete = async (id) => {
-	
+  const handleDelete = (id, name) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await axiosSecure.delete(`/favourites/${id}`);
+        if (res.data.deletedCount > 0) {
+          refetch();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${name} has been Deleted`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      }
+    });
 
-
-
-
-
-
-    // const confirm = window.confirm('Are you sure you want to delete this favourite?');
-    // if (confirm) {
-    //   await axiosSecure.delete(`/favourites/${id}`);
-    //   refetch(); // Refresh the data after deletion
-    // }
   };
 
   return (
@@ -58,7 +71,7 @@ const Myfavourites = () => {
                   <td className="p-3 border">{fav.occupation}</td>
                   <td className="p-3 border">
                     <button
-                      onClick={() => handleDelete(fav._id)}
+                      onClick={() => handleDelete(fav._id, fav.name)}
                       className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
                     >
                       Delete
