@@ -4,16 +4,23 @@ import useSecure from './useSecure';
 import { useQuery } from '@tanstack/react-query';
 
 const usePremium = () => {
-	const {user} = useContext(ContextApi)
-	const axiosSecure = useSecure();
-	const {data: isPremium,isPending:isAdminPending} = useQuery({
-		queryKey: [user?.email, 'premium'],
-		queryFn: async() => {
-			const res = await axiosSecure.get(`/premiumReq/premium/${user.email}`)
-			return res.data?.isPremium;
-		}
-	})
-	return [isPremium,isAdminPending]
+    const { user } = useContext(ContextApi);
+    const axiosSecure = useSecure();
+
+    const { data: isPremium, isLoading: isAdminPending } = useQuery({
+        queryKey: [user?.email, 'premium'],
+        queryFn: async () => {
+            if (!user?.email) {
+                console.error("User email is undefined.");
+                return false; // Default to false if email is not available
+            }
+            const res = await axiosSecure.get(`/premiumReq/premium/${user.email}`);
+            console.log("API Response:", res.data); // Debugging log
+            return res.data?.isPremium ?? false; // Default to false if isPremium is missing
+        },
+    });
+
+    return [isPremium, isAdminPending];
 };
 
 export default usePremium;

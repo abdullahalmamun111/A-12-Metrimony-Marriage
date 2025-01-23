@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import useAllUser from "../Hooks/useAllUser";
 import { ContextApi } from "../AuthProvider/AuthContext";
@@ -12,8 +12,22 @@ const Details = () => {
   const { allUser } = useAllUser(); // All biodatas
   const navigate = useNavigate(); // Navigation hook
   // const premium = false; 
-  const [isPremium] = usePremium();
-  console.log(isPremium)
+  // const [isPremium] = usePremium();
+  // console.log(isPremium)
+
+  const [isPremium ,setPremium ] = useState(false);
+
+  useEffect(() => {
+    if (user?.email) {
+      fetch(`http://localhost:5000/premiumReq/premium/${user.email}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setPremium(data.premium)
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    }
+  }, [user?.email]);
+
   const axiosSecure = useSecure();
   // Extract detailsData properties
   const {
