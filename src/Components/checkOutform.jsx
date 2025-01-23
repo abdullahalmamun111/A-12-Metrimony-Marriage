@@ -1,10 +1,25 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import useSecure from "../Hooks/useSecure";
+import { ContextApi } from "../AuthProvider/AuthContext";
+import Swal from "sweetalert2";
 
 const CheckOutform = ({ passingData }) => {
+  const {user} = useContext(ContextApi)
+  const [clientSecret, setClientSecret] = useState('')
   const [error, setError] = useState('');
   const stripe = useStripe();
   const elements = useElements();
+  const axiosSecure = useSecure();
+  const amount = 500;
+
+  useEffect(() => {
+	axiosSecure.post('/create-payment-intent',{amount:amount})
+	.then(res => {
+		console.log(res.data.clientSecret)
+		setClientSecret(res.data.clientSecret)
+	})
+  },[])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -32,7 +47,43 @@ const CheckOutform = ({ passingData }) => {
 		setError('')
 	}
 
-    // Payment handling logic here
+    // confirm payment
+	const {paymentIntent, error:confirmErorr} = await stripe.confirmCardPayment(clientSecret,{
+		payment_method: {
+			card: card,
+			billing_details: {
+				email: user?.email || 'anonymous',
+				name: user?.displayName || 'anonymous'
+			}
+		}
+	})
+
+	if(confirmErorr){
+		console.log('confirm error')
+	}
+	else{
+		console.log('payment intenet',paymentIntent)
+
+		if(paymentIntent.status === 'succeeded'){
+			const reqUserData = {
+				email: user.email,
+				name:user.displayName,
+				biodataId:passingData.biodataId
+			}
+
+		 const res = await axiosSecure.post('/request',reqUserData)
+		 console.log('payment saved', res.data)
+		 if(res.data.insertedId){
+			Swal.fire({
+			  position: "center",
+			  icon: "success",
+			  title: "Your Request has been Successfull",
+			  showConfirmButton: false,
+			  timer: 1500
+			});
+		  }	
+		}
+	}
   };
 
   return (
@@ -64,7 +115,7 @@ const CheckOutform = ({ passingData }) => {
         </div>
         <button
           type="submit"
-          disabled={!stripe}
+          disabled={!stripe || !clientSecret}
           className="w-full px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Pay $5

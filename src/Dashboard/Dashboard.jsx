@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 
 const Dashboard = () => {
-  const admin = false; // Change this value to test user vs admin views
+  const admin = true; // Change this value to test user vs admin views
   const location = useLocation(); // Get the current route location
 
   // Check if the right-side content should be blank (no content loaded in the outlet yet)

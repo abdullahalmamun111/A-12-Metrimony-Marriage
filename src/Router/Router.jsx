@@ -11,6 +11,7 @@ import EditBiodata from '../Dashboard-Pages/EditBiodata';
 import Details from '../Components/Details';
 import Myfavourites from '../Components/Myfavourites';
 import Payment from '../Components/Payment';
+import ApprovedContacts from '../Components/ApprovedContacts';
 
 
 
@@ -64,6 +65,10 @@ import Payment from '../Components/Payment';
 				{
 					path: '/dashboard/favourites',
 					element: <PrivateRoute><Myfavourites></Myfavourites></PrivateRoute>
+				},
+				{
+					path:'/dashboard/approved-contacts',
+					element: <PrivateRoute><ApprovedContacts></ApprovedContacts></PrivateRoute>
 				}
 				
 			]
