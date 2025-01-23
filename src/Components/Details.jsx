@@ -49,6 +49,7 @@ const Details = () => {
       permanentDivision,
       occupation,
       name,
+      email: user.email
     };
     axiosSecure.post("/favourites", favoriteItem)
 	.then((res) => {

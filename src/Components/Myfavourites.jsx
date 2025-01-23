@@ -1,16 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useContext } from "react";
 import useSecure from "../Hooks/useSecure";
 import Swal from "sweetalert2";
+import { ContextApi } from "../AuthProvider/AuthContext";
 
 const Myfavourites = () => {
   const axiosSecure = useSecure();
-
+  const {user} = useContext(ContextApi);
   // Fetch favourites data using TanStack Query
   const { data: favourites = [], refetch } = useQuery({
     queryKey: ["favourites"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/favourites");
+      const res = await axiosSecure.get(`/favourites?email=${user.email}`);
       return res.data;
     },
   });

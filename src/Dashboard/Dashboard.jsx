@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import useAdmin from "../Hooks/useAdmin";
 
 const Dashboard = () => {
+  const [isAdmin] = useAdmin();
   const admin = true; // Change this value to test user vs admin views
   const location = useLocation(); // Get the current route location
 
@@ -21,7 +23,7 @@ const Dashboard = () => {
 
         {/* Navigation Menu */}
         <nav className="space-y-2 px-2">
-          {admin ? (
+          {isAdmin ? (
             <>
               {/* Admin Navigation Menu */}
               <NavLink
@@ -45,7 +47,7 @@ const Dashboard = () => {
                 Manage Users
               </NavLink>
               <NavLink
-                to="/dashboard/approved-premium"
+                to="/dashboard/approvedPremium"
                 className={({ isActive }) =>
                   isActive
                     ? "block bg-blue-700 rounded-md px-4 py-3 font-medium shadow-md"
@@ -135,7 +137,7 @@ const Dashboard = () => {
       <div className="flex-1">
         <div className="py-2">
           <h1 className="text-3xl font-bold text-gray-800 text-center">
-            {admin ? "Admin Dashboard" : "User Dashboard"}
+            {isAdmin ? "Admin Dashboard" : "User Dashboard"}
           </h1>
         </div>
         <div className="p-4 bg-gray-200 h-screen">

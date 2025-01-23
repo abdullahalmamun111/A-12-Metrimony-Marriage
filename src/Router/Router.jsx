@@ -12,6 +12,10 @@ import Details from '../Components/Details';
 import Myfavourites from '../Components/Myfavourites';
 import Payment from '../Components/Payment';
 import ApprovedContacts from '../Components/ApprovedContacts';
+import ManageUsers from '../Dashboard-Pages/ManageUsers';
+import ViewBiodata from '../Dashboard-Pages/ViewBiodata';
+import ApprovePremium from '../Dashboard-Pages/ApprovePremium';
+import Admindashboard from '../Dashboard-Pages/Admindashboard';
 
 
 
@@ -69,6 +73,22 @@ import ApprovedContacts from '../Components/ApprovedContacts';
 				{
 					path:'/dashboard/approved-contacts',
 					element: <PrivateRoute><ApprovedContacts></ApprovedContacts></PrivateRoute>
+				},
+				{
+					path:'/dashboard/manage-users',
+					element: <PrivateRoute><ManageUsers></ManageUsers></PrivateRoute>
+				},
+				{
+					path: '/dashboard/view-biodata',
+					element: <PrivateRoute><ViewBiodata></ViewBiodata></PrivateRoute>
+				},
+				{
+					path: '/dashboard/approvedPremium',
+					element: <PrivateRoute><ApprovePremium></ApprovePremium></PrivateRoute>
+				},
+				{
+					path: '/dashboard/admin',
+					element: <PrivateRoute><Admindashboard></Admindashboard></PrivateRoute>
 				}
 				
 			]
