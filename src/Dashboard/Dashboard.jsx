@@ -4,7 +4,6 @@ import useAdmin from "../Hooks/useAdmin";
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
-  const admin = true; // Change this value to test user vs admin views
   const location = useLocation(); // Get the current route location
 
   // Check if the right-side content should be blank (no content loaded in the outlet yet)

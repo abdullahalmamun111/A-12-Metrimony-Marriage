@@ -4,13 +4,16 @@ import useAllUser from "../Hooks/useAllUser";
 import { ContextApi } from "../AuthProvider/AuthContext";
 import useSecure from "../Hooks/useSecure";
 import Swal from "sweetalert2";
+import usePremium from "../Hooks/usePremium";
 
 const Details = () => {
   const { user } = useContext(ContextApi);
   const detailsData = useLoaderData(); // Current biodata details
   const { allUser } = useAllUser(); // All biodatas
   const navigate = useNavigate(); // Navigation hook
-  const premium = false; // Update this value to test normal vs premium views
+  // const premium = false; 
+  const [isPremium] = usePremium();
+  console.log(isPremium)
   const axiosSecure = useSecure();
   // Extract detailsData properties
   const {
@@ -125,7 +128,7 @@ const Details = () => {
         </p>
 
         {/* Conditional Contact Information */}
-        {premium ? (
+        {isPremium ? (
           <>
             <p>
               <strong>Email:</strong> {email}
@@ -149,7 +152,7 @@ const Details = () => {
         </button>
 
         {/* Request Contact Information Button */}
-        {!premium && (
+        {!isPremium && (
           <Link to={`/checkout/${_id}`}>
 		  <button
             onClick={handleRequestContactInfo}
