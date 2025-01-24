@@ -10,11 +10,11 @@ const UserCard = ({ item }) => {
       <div className="absolute inset-0 bg-yellow-400 -z-10 rounded-lg scale-110"></div>
 
       {/* Profile Image */}
-      <div className="relative h-64 w-full overflow-hidden rounded-t-lg">
+      <div className="relative h-[300px] w-full bg-center overflow-hidden rounded-t-lg">
         <img
           src={profileImage}
           alt="Profile"
-          className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110"
+          className="w-full bg-center h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110"
         />
       </div>
 

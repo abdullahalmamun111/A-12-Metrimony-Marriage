@@ -92,7 +92,7 @@ const Details = () => {
         <img
           src={profileImage}
           alt={name}
-          className="w-full h-64 object-cover rounded mb-4"
+          className="w-[400px] rounded mb-4"
         />
         <h2 className="text-2xl font-bold mb-2">{name}</h2>
         <p>

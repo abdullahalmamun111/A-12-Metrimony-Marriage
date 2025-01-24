@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useSecure from '../Hooks/useSecure';
+import SectionTitle from '../Shared/SectionTitle';
 
 const OurSuccessStory = () => {
   const axiosSecure = useSecure();
@@ -14,14 +15,21 @@ const OurSuccessStory = () => {
     },
   });
 
+  // Sort success stories by marriageDate in descending order
+  const sortedSuccessData = [...successData].sort((a, b) => {
+    const dateA = new Date(a.marriageDate || '1970-01-01');
+    const dateB = new Date(b.marriageDate || '1970-01-01');
+    return dateB - dateA; // Descending order
+  });
+
   return (
     <div className="bg-gray-100 py-12">
-      <h1 className="text-3xl font-bold text-center text-blue-600 mb-8">
-        Our Success Stories
-      </h1>
-      {successData.length > 0 ? (
+
+	  <SectionTitle title={'Our Success Stories'} subtitle={" A Celebration of Love and New Beginnings!"}>
+       </SectionTitle>
+      {sortedSuccessData.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 md:px-12">
-          {successData.map((story) => (
+          {sortedSuccessData.map((story) => (
             <div
               key={story._id}
               className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center"

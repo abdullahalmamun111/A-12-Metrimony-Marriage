@@ -12,12 +12,14 @@ const GotMarried = () => {
     const partnerBiodataId = form.partnerBiodataId.value;
     const coupleImage = form.coupleImage.value;
     const successStory = form.successStory.value;
+    const marriageDate = form.marriageDate.value;
 
     const data = {
       selfBiodataId,
       partnerBiodataId,
       coupleImage,
       successStory,
+      marriageDate
     };
     axiosPublic.post("/successStory", data).then((res) => {
       if (res.data.insertedId) {
@@ -80,6 +82,21 @@ const GotMarried = () => {
             type="text"
             id="coupleImage"
             name="coupleImage"
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="marriageDate"
+            className="block font-medium text-gray-700"
+          >
+            Marriage Date
+          </label>
+          <input
+            type="date"
+            id="marriageDate"
+            name="marriageDate"
             className="w-full mt-1 p-2 border border-gray-300 rounded-md"
             required
           />
