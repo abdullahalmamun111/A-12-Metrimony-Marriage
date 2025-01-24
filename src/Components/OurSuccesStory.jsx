@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import useSecure from '../Hooks/useSecure';
 import SectionTitle from '../Shared/SectionTitle';
 
+import ReactStarsRating from 'react-awesome-stars-rating';
 const OurSuccessStory = () => {
   const axiosSecure = useSecure();
 
@@ -48,7 +49,8 @@ const OurSuccessStory = () => {
 
               {/* Review Stars */}
               <div className="flex items-center gap-1 mb-2">
-                {[...Array(5)].map((_, index) => (
+			  <ReactStarsRating className='flex' value={5} />
+                {/* {[...Array(5)].map((_, index) => (
                   <span
                     key={index}
                     className={`text-yellow-500 ${
@@ -57,7 +59,8 @@ const OurSuccessStory = () => {
                   >
                     ★
                   </span>
-                ))}
+                ))} */}
+			
               </div>
 
               {/* Success Story Text */}

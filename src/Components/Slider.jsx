@@ -23,21 +23,20 @@ const Slider = () => {
 		  title: "Find Your Perfect Match, Start Your Journey",
 		  description:
 			"Every click brings you closer to your soulmate. Join today and take the first step toward a lifetime of happiness.",
-		  buttonText: "Start Your Search",
 		},
 		{
 		  image: img_2,
 		  title: "Love Knows No Limits, Discover Yours",
 		  description:
 			"Explore endless possibilities and meet like-minded individuals who share your values and dreams.",
-		  buttonText: "Discover Matches",
+	
 		},
 		{
 		  image: img_3,
 		  title: "Together, We Create Forever",
 		  description:
 			"From heartfelt connections to lifelong commitments, find your happily ever after with us.",
-		  buttonText: "Find Your Forever",
+		  
 		},
 	  ];
 	  
@@ -73,9 +72,7 @@ const Slider = () => {
                   <p className="text-white text-base md:text-lg mb-6">
                     {slide.description}
                   </p>
-                  <button className="bg-red-500 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-red-600 transition">
-                    {slide.buttonText}
-                  </button>
+                  
                 </div>
               </div>
             </SwiperSlide>

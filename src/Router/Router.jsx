@@ -19,6 +19,8 @@ import Admindashboard from '../Dashboard-Pages/Admindashboard';
 import Mycontact from '../Dashboard-Pages/Mycontact';
 import GotMarried from '../Dashboard-Pages/GotMarried';
 import MakeSuccess from '../Dashboard-Pages/MakeSuccess';
+import About from '../Pages/About';
+import Contact from '../Pages/Contact';
 
 
 
@@ -57,6 +59,14 @@ import MakeSuccess from '../Dashboard-Pages/MakeSuccess';
 				path:'/checkout/:id',
 				element: <PrivateRoute><Payment></Payment></PrivateRoute>,
 				loader: ({params}) => fetch(`http://localhost:5000/details/${params.id}`)
+			},
+			{
+				path: '/about',
+				element: <About></About>
+			},
+			{
+				path: '/contact',
+				element: <Contact></Contact>
 			}
 			
 		  ]
