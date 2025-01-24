@@ -33,7 +33,7 @@ const BiodatasPage = () => {
     });
 
     return (
-        <div className="flex flex-col lg:flex-row">
+        <div className="flex flex-col mt-16 lg:flex-row">
             {/* Filter Section */}
             <div className="w-full lg:w-1/4 p-4 bg-gray-100">
                 <h2 className="text-lg font-bold mb-4">Filters</h2>

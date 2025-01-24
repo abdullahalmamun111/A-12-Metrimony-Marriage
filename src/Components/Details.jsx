@@ -88,7 +88,7 @@ const Details = () => {
   return (
     <div className="p-4">
       {/* Biodata Details */}
-      <div className="border rounded-lg p-4 shadow-lg bg-white mb-8">
+      <div className="border rounded-lg p-4 mt-16 shadow-lg bg-white mb-8">
         <img
           src={profileImage}
           alt={name}

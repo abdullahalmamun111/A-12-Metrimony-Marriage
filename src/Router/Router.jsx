@@ -17,6 +17,8 @@ import ViewBiodata from '../Dashboard-Pages/ViewBiodata';
 import ApprovePremium from '../Dashboard-Pages/ApprovePremium';
 import Admindashboard from '../Dashboard-Pages/Admindashboard';
 import Mycontact from '../Dashboard-Pages/Mycontact';
+import GotMarried from '../Dashboard-Pages/GotMarried';
+import MakeSuccess from '../Dashboard-Pages/MakeSuccess';
 
 
 
@@ -94,6 +96,14 @@ import Mycontact from '../Dashboard-Pages/Mycontact';
 				{
 					path: '/dashboard/contact-requests',
 					element: <PrivateRoute><Mycontact></Mycontact></PrivateRoute>
+				},
+				{
+					path: '/dashboard/gotMarried',
+					element: <PrivateRoute><GotMarried></GotMarried></PrivateRoute>
+				},
+				{
+					path: '/dashboard/makestory',
+					element: <PrivateRoute><MakeSuccess></MakeSuccess></PrivateRoute>
 				}
 				
 			]

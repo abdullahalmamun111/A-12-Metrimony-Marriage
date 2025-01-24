@@ -1,13 +1,27 @@
-import React from "react";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import useAdmin from "../Hooks/useAdmin";
+import Swal from "sweetalert2";
+import { ContextApi } from "../AuthProvider/AuthContext";
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
   const location = useLocation(); // Get the current route location
-
+  const {logOut} = useContext(ContextApi)
+  const navigate = useNavigate();
   // Check if the right-side content should be blank (no content loaded in the outlet yet)
   const isDefault = location.pathname === "/dashboard" || location.pathname === "/dashboard/";
+
+    const handleLogout = () => {
+      logOut().then(() => {
+        Swal.fire({
+          title: "Success!",
+          text: "Log Out Successful",
+          icon: "success",
+        });
+      });
+      navigate('/')
+    };
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -65,6 +79,17 @@ const Dashboard = () => {
               >
                 Approved Contact Requests
               </NavLink>
+
+              <NavLink
+                to="/dashboard/makestory"
+                className={({ isActive }) =>
+                  isActive
+                    ? "block bg-blue-700 rounded-md px-4 py-3 font-medium shadow-md"
+                    : "block hover:bg-blue-600 rounded-md px-4 py-3"
+                }
+              >
+                Make Success Story
+              </NavLink>
             </>
           ) : (
             <>
@@ -109,13 +134,25 @@ const Dashboard = () => {
               >
                 Favourites Biodata
               </NavLink>
+
+              <NavLink
+                to="/dashboard/gotMarried"
+                className={({ isActive }) =>
+                  isActive
+                    ? "block bg-blue-700 rounded-md px-4 py-3 font-medium shadow-md"
+                    : "block hover:bg-blue-600 rounded-md px-4 py-3"
+                }
+              >
+                Got Married
+              </NavLink>
             </>
           )}
         </nav>
 
         {/* Logout Button */}
-        <div className="px-2 space-y-2 mt-2">
+        <div className="px-2 space-y-2 mt-2 pb-5">
           <button
+          onClick={handleLogout}
             className="w-full bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 rounded-md px-4 py-3 text-white font-bold shadow-lg"
           >
             Logout
@@ -135,14 +172,14 @@ const Dashboard = () => {
       {/* Right Side Content */}
       <div className="flex-1">
         <div className="py-2">
-          <h1 className="text-3xl font-bold text-gray-800 text-center">
+          <h1 className="text-3xl rounded-md font-bold bg-yellow-400 py-4 text-gray-600 text-center">
             {isAdmin ? "Admin Dashboard" : "User Dashboard"}
           </h1>
         </div>
-        <div className="p-4 bg-gray-200 h-screen">
+        <div className="p-4 bg-gray-200">
           {isDefault ? (
             <div className="flex items-center justify-center h-full">
-              <p className="text-xl text-gray-600">
+              <p className="text-xl text-center text-gray-600">
                 Select an option from the left menu to get started.
               </p>
             </div>

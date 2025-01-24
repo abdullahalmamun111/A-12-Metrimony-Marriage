@@ -19,16 +19,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-400 shadow-md">
+    <nav className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-400 shadow-md fixed top-0 left-0 w-full z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo and Website Name */}
           <div className="flex items-center space-x-3">
-            <img
-              className="h-12 w-12 rounded-full"
-              src={logo}
-              alt="Logo"
-            />
+            <img className="h-12 w-12 rounded-full" src={logo} alt="Logo" />
             <h1 className="text-2xl font-bold text-white">Matrimony Hub</h1>
           </div>
 
@@ -133,57 +129,68 @@ const Navbar = () => {
       </div>
 
       {/* Dropdown Menu for Small Devices */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-purple-500 text-white shadow-md">
-          <NavLink
-            to="/"
-            className="block px-4 py-2 hover:bg-purple-600"
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/biodatas"
-            className="block px-4 py-2 hover:bg-purple-600"
-          >
-            Biodatas
-          </NavLink>
-          <NavLink
-            to="/about"
-            className="block px-4 py-2 hover:bg-purple-600"
-          >
-            About Us
-          </NavLink>
-          <NavLink
-            to="/contact"
-            className="block px-4 py-2 hover:bg-purple-600"
-          >
-            Contact Us
-          </NavLink>
-          {user ? (
-            <>
-              <NavLink
-                to="/dashboard"
-                className="block px-4 py-2 hover:bg-purple-600"
-              >
-                Dashboard
-              </NavLink>
-              <button
-                onClick={handleLogout}
-                className="block px-4 py-2 hover:bg-purple-600"
-              >
-                Log Out
-              </button>
-            </>
-          ) : (
+      <div
+        className={`md:hidden bg-purple-500 text-white shadow-md transition-all duration-500 ease-in-out ${
+          isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+        }`}
+      >
+        <NavLink
+          to="/"
+          className="block px-4 py-2 hover:bg-purple-600"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          Home
+        </NavLink>
+        <NavLink
+          to="/biodatas"
+          className="block px-4 py-2 hover:bg-purple-600"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          Biodatas
+        </NavLink>
+        <NavLink
+          to="/about"
+          className="block px-4 py-2 hover:bg-purple-600"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          About Us
+        </NavLink>
+        <NavLink
+          to="/contact"
+          className="block px-4 py-2 hover:bg-purple-600"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          Contact Us
+        </NavLink>
+        {user ? (
+          <>
             <NavLink
-              to="/login"
+              to="/dashboard"
+              className="block px-4 py-2 hover:bg-purple-600"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Dashboard
+            </NavLink>
+            <button
+              onClick={() => {
+                setIsMenuOpen(false);
+                handleLogout();
+              }}
               className="block px-4 py-2 hover:bg-purple-600"
             >
-              Login
-            </NavLink>
-          )}
-        </div>
-      )}
+              Log Out
+            </button>
+          </>
+        ) : (
+          <NavLink
+            to="/login"
+            className="block px-4 py-2 hover:bg-purple-600"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Login
+          </NavLink>
+        )}
+      </div>
     </nav>
   );
 };

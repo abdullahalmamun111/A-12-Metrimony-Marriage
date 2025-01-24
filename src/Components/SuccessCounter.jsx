@@ -1,45 +1,62 @@
 import React from 'react';
 import { FaUser, FaFemale, FaMale, FaHeart } from 'react-icons/fa';
+import SectionTitle from '../Shared/SectionTitle';
+import useAllUser from '../Hooks/useAllUser';
+import useSecure from '../Hooks/useSecure';
+import { useQuery } from '@tanstack/react-query';
 
 const SuccessCounter = () => {
+  const {allUser} = useAllUser();
+  const axiosSecure = useSecure();
+
+  const totalBiodataCount = allUser.length;
+  const maleBiodataCount = allUser.filter(user => user.biodataType === "Male").length;
+  const femaleBiodataCount = allUser.filter(user => user.biodataType === "Female").length;
+  const premiumBiodataCount = allUser.filter(user => user.userType === "premium").length;
+
+  // Fetching success story data
+  const { data: successData = [] } = useQuery({
+    queryKey: ['successStory'],
+    queryFn: async () => {
+      const res = await axiosSecure.get('/successStory');
+      return res.data;
+    },
+  });
+
+
   const counters = [
     {
       id: 1,
       title: "Total Biodata",
-      value: 5000,
+      value:totalBiodataCount,
       icon: <FaUser className="text-6xl text-blue-500" />,
     },
     {
       id: 2,
       title: "Girls' Biodata",
-      value: 3000,
+      value: maleBiodataCount,
       icon: <FaFemale className="text-6xl text-pink-500" />,
     },
     {
       id: 3,
       title: "Boys' Biodata",
-      value: 2000,
+      value: femaleBiodataCount,
       icon: <FaMale className="text-6xl text-green-500" />,
     },
     {
       id: 4,
       title: "Marriages Completed",
-      value: 1200,
+      value: successData.length,
       icon: <FaHeart className="text-6xl text-red-500" />,
     },
   ];
 
   return (
-    <section className="bg-gradient-to-r from-white via-yellow-50 to-pink-50 py-16">
+    <section className="bg-gradient-to-r from-white via-yellow-50 to-pink-50 py-8">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-10">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800">
-            Our Achievements
-          </h2>
-          <p className="text-lg text-gray-600 mt-4">
-            A glimpse of what we've accomplished together!
-          </p>
-        </div>
+
+        <SectionTitle title={'Our Achievements'} subtitle={"A glimpse of what we've accomplished together!"}>
+       </SectionTitle>
 
         {/* Counters */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
