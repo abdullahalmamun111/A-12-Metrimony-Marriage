@@ -14,25 +14,22 @@ const ApprovedContacts = () => {
     },
   });
 
-  const handleApprove = async (id,name) => {
-    axiosSecure.patch(`/request/approved/${id}`)
-    .then(res => {
-     if (res.data.modifiedCount > 0) {
-          refetch()
-          Swal.fire({
+  const handleApprove = async (id, name) => {
+    axiosSecure.patch(`/request/approved/${id}`).then((res) => {
+      if (res.data.modifiedCount > 0) {
+        refetch();
+        Swal.fire({
           title: "Good job!",
-          text: `${name}'s Requst been Approved!`,
+          text: `${name}'s Request has been Approved!`,
           icon: "success",
-          });
-        }
-    })
-
-
+        });
+      }
+    });
   };
 
   return (
-    <div className="p-4 min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold text-center mb-6">
+    <div className="p-4 min-h-screen bg-gray-50 w-full">
+      <h1 className="text-2xl font-bold text-center mb-6 text-blue-600">
         Approved Contact Requests
       </h1>
       <div className="overflow-x-auto">
@@ -47,23 +44,33 @@ const ApprovedContacts = () => {
           </thead>
           <tbody>
             {requests.map((request) => (
-              <tr key={request._id} className="hover:bg-gray-50">
+              <tr
+                key={request._id}
+                className="hover:bg-gray-50 border-b last:border-none"
+              >
                 <td className="py-3 px-4">{request.name}</td>
                 <td className="py-3 px-4">{request.email}</td>
                 <td className="py-3 px-4">{request.biodataId}</td>
                 <td className="py-3 px-4">
-                  {request.approved? 'Approved':<button
-                    className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
-                    onClick={() => handleApprove(request._id,request.name)}
-                  >
-                    Approve Contact
-                  </button>}
+                  {request.approved ? (
+                    <span className="text-green-600 font-semibold">Approved</span>
+                  ) : (
+                    <button
+                      className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded-lg transition"
+                      onClick={() => handleApprove(request._id, request.name)}
+                    >
+                      Approve Contact
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
             {requests.length === 0 && (
               <tr>
-                <td colSpan="4" className="py-3 px-4 text-center text-gray-500">
+                <td
+                  colSpan="4"
+                  className="py-3 px-4 text-center text-gray-500 font-semibold"
+                >
                   No contact requests found.
                 </td>
               </tr>

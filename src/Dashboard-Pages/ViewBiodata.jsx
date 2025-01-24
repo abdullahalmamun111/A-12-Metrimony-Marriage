@@ -13,6 +13,8 @@ const ViewBiodata = () => {
   const userBiodata = allUser.filter(
     (biodata) => biodata.email === user?.email
   );
+
+  console.log(userBiodata)
   
   const handlePremiumReq = (name,email,biodataId,premiumreqId) => {
 	const data = {name,email,biodataId,premiumreqId}
@@ -42,7 +44,7 @@ const ViewBiodata = () => {
   }
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-gray-100 min-h-screen w-full">
       <h1 className="text-3xl font-bold text-blue-700 text-center mb-8">
         Your Biodata
       </h1>
@@ -125,12 +127,12 @@ const ViewBiodata = () => {
                   <span className="font-medium">Mobile:</span> {biodata.mobile}
                 </p>
               </div>
-              <button
+              {biodata.userType ? 'Premium User' :<button
                 className="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                 onClick={()=> handlePremiumReq(biodata.name,biodata.email,biodata.biodataId,biodata._id)}
               >
                 Make Biodata Premium
-              </button>
+              </button>}
             </div>
           ))}
         </div>

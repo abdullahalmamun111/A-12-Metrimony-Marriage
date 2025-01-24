@@ -24,6 +24,8 @@ const Mycontact = () => {
     (request) => request.email === user?.email
   );
 
+  // console.log(filteredRequests)
+
   const handleDeleteRequest = (id, name) => {
     Swal.fire({
       title: "Are you sure?",
@@ -51,10 +53,10 @@ const Mycontact = () => {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">My Contact Requests</h2>
+    <div className="p-4 w-full">
+      <h2 className="text-xl text-center font-bold mb-4">My Contact Requests</h2>
       {filteredRequests.length === 0 ? (
-        <p>No approved contact requests available.</p>
+        <p className="text-center">No approved contact requests available.</p>
       ) : (
         <table className="w-full border-collapse border border-gray-300">
           <thead>
@@ -71,7 +73,7 @@ const Mycontact = () => {
             {filteredRequests.map((request) => (
               <tr key={request._id} className="text-center">
                 <td className="border border-gray-300 px-4 py-2">
-                  {request.name}
+                  {request.bioName}
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
                   {request.biodataId}
