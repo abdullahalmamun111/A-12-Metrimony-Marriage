@@ -14,7 +14,10 @@ const Payment = () => {
 
 	const passingData = {
 		biodataId: data.biodataId,
-		email: user.email
+		email: user.email,
+    name: data.name,
+    mobile: data.mobile,
+    bioEmail:data.email
 	}
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-4">

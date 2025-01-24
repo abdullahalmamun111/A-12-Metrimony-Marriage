@@ -1,6 +1,7 @@
 import React from "react";
 import useSecure from "../Hooks/useSecure";
 import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 const ApprovedContacts = () => {
   const axiosSecure = useSecure();
@@ -13,15 +14,20 @@ const ApprovedContacts = () => {
     },
   });
 
-  const handleApprove = async (id) => {
-    try {
-      await axiosSecure.post(`/request/approve/${id}`);
-      refetch(); // Refetch data after approving
-      alert("Contact request approved successfully!");
-    } catch (error) {
-      console.error("Failed to approve contact request:", error);
-      alert("Failed to approve the contact request. Please try again.");
-    }
+  const handleApprove = async (id,name) => {
+    axiosSecure.patch(`/request/approved/${id}`)
+    .then(res => {
+     if (res.data.modifiedCount > 0) {
+          refetch()
+          Swal.fire({
+          title: "Good job!",
+          text: `${name}'s Requst been Approved!`,
+          icon: "success",
+          });
+        }
+    })
+
+
   };
 
   return (
@@ -46,12 +52,12 @@ const ApprovedContacts = () => {
                 <td className="py-3 px-4">{request.email}</td>
                 <td className="py-3 px-4">{request.biodataId}</td>
                 <td className="py-3 px-4">
-                  <button
+                  {request.approved? 'Approved':<button
                     className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
-                    onClick={() => handleApprove(request._id)}
+                    onClick={() => handleApprove(request._id,request.name)}
                   >
                     Approve Contact
-                  </button>
+                  </button>}
                 </td>
               </tr>
             ))}

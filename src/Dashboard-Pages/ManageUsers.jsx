@@ -19,7 +19,8 @@ const ManageUsers = () => {
 
   // Handlers for making admin and premium
   const handleMakeAdmin = async (id,name) => {
-	axiosSecure.patch(`/premiumReq/admin/${id}`).then((res) => {
+	axiosSecure.patch(`/premiumReq/admin/${id}`)
+  .then((res) => {
 		if (res.data.modifiedCount > 0) {
 		  refetch()
 		  Swal.fire({

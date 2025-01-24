@@ -68,8 +68,12 @@ const CheckOutform = ({ passingData }) => {
 			const reqUserData = {
 				email: user.email,
 				name:user.displayName,
-				biodataId:passingData.biodataId
+				biodataId:passingData.biodataId,
+        bioName:passingData.name,
+        bioEmail:passingData.bioEmail,
+        bioMobile:passingData.mobile,
 			}
+      
 
 		 const res = await axiosSecure.post('/request',reqUserData)
 		 console.log('payment saved', res.data)

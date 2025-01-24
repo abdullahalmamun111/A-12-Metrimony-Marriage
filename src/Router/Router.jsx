@@ -16,6 +16,7 @@ import ManageUsers from '../Dashboard-Pages/ManageUsers';
 import ViewBiodata from '../Dashboard-Pages/ViewBiodata';
 import ApprovePremium from '../Dashboard-Pages/ApprovePremium';
 import Admindashboard from '../Dashboard-Pages/Admindashboard';
+import Mycontact from '../Dashboard-Pages/Mycontact';
 
 
 
@@ -89,6 +90,10 @@ import Admindashboard from '../Dashboard-Pages/Admindashboard';
 				{
 					path: '/dashboard/admin',
 					element: <PrivateRoute><Admindashboard></Admindashboard></PrivateRoute>
+				},
+				{
+					path: '/dashboard/contact-requests',
+					element: <PrivateRoute><Mycontact></Mycontact></PrivateRoute>
 				}
 				
 			]
