@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import useSecure from "../Hooks/useSecure";
 import { ContextApi } from "../AuthProvider/AuthContext";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const CheckOutform = ({ passingData }) => {
   const {user} = useContext(ContextApi)
@@ -12,6 +13,7 @@ const CheckOutform = ({ passingData }) => {
   const elements = useElements();
   const axiosSecure = useSecure();
   const amount = 500;
+  const navigate = useNavigate()
 
   useEffect(() => {
 	axiosSecure.post('/create-payment-intent',{amount:amount})
@@ -85,6 +87,7 @@ const CheckOutform = ({ passingData }) => {
 			  showConfirmButton: false,
 			  timer: 1500
 			});
+      navigate('/')
 		  }	
 		}
 	}

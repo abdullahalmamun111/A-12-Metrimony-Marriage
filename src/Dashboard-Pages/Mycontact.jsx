@@ -2,16 +2,19 @@ import React, { useContext } from "react";
 import useSecure from "../Hooks/useSecure";
 import { useQuery } from "@tanstack/react-query";
 import { ContextApi } from "../AuthProvider/AuthContext";
+import usePublic from "../Hooks/usePublic";
+import Swal from "sweetalert2";
 
 const Mycontact = () => {
   const axiosSecure = useSecure();
+  const axiosPublic = usePublic();
   const { user } = useContext(ContextApi);
 
   // Fetch all requests
   const { data: requests = [], refetch } = useQuery({
     queryKey: ["request"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/request");
+      const res = await axiosPublic.get("/request");
       return res.data;
     },
   });
@@ -21,9 +24,31 @@ const Mycontact = () => {
     (request) => request.email === user?.email
   );
 
-  const handleDeleteRequest = (id,name) => {
-	
-  }
+  const handleDeleteRequest = (id, name) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await axiosPublic.delete(`/request/delete/${id}`);
+        if (res.data.deletedCount > 0) {
+          refetch();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${name} has been Deleted`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      }
+    });
+  };
 
   return (
     <div className="p-4">
@@ -45,7 +70,9 @@ const Mycontact = () => {
           <tbody>
             {filteredRequests.map((request) => (
               <tr key={request._id} className="text-center">
-                <td className="border border-gray-300 px-4 py-2">{request.name}</td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {request.name}
+                </td>
                 <td className="border border-gray-300 px-4 py-2">
                   {request.biodataId}
                 </td>
@@ -61,7 +88,9 @@ const Mycontact = () => {
                 <td className="border border-gray-300 px-4 py-2">
                   <button
                     className="bg-red-500 text-white px-4 py-1 rounded"
-                    onClick={() => handleDeleteRequest(request._id,request.name)}
+                    onClick={() =>
+                      handleDeleteRequest(request._id, request.name)
+                    }
                   >
                     Delete
                   </button>

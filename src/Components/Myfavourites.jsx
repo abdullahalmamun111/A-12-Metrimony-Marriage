@@ -3,15 +3,17 @@ import React, { useContext } from "react";
 import useSecure from "../Hooks/useSecure";
 import Swal from "sweetalert2";
 import { ContextApi } from "../AuthProvider/AuthContext";
+import usePublic from "../Hooks/usePublic";
 
 const Myfavourites = () => {
   const axiosSecure = useSecure();
+  const axiosPublic = usePublic()
   const {user} = useContext(ContextApi);
   // Fetch favourites data using TanStack Query
   const { data: favourites = [], refetch } = useQuery({
     queryKey: ["favourites"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/favourites?email=${user.email}`);
+      const res = await axiosPublic.get(`/favourites?email=${user.email}`);
       return res.data;
     },
   });
@@ -28,7 +30,7 @@ const Myfavourites = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const res = await axiosSecure.delete(`/favourites/${id}`);
+        const res = await axiosPublic.delete(`/favourites/${id}`);
         if (res.data.deletedCount > 0) {
           refetch();
           Swal.fire({
