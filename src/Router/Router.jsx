@@ -99,8 +99,9 @@ import UpdateBio from '../Dashboard-Pages/UpdateBio';
 					element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
 				},
 				{
-					path: '/dashboard/view-biodata',
-					element: <PrivateRoute><ViewBiodata></ViewBiodata></PrivateRoute>
+					path: '/dashboard/view-biodata/:email',
+					element: <PrivateRoute><ViewBiodata></ViewBiodata></PrivateRoute>,
+					loader: ({params}) => fetch(`https://partner-path-metrimony-server.vercel.app/biodata/update/${params.email}`)
 				},
 				{
 					path: '/dashboard/approvedPremium',

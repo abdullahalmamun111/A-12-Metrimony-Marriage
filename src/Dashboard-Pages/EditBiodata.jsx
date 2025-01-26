@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import Swal from "sweetalert2";
 import { ContextApi } from "../AuthProvider/AuthContext";
 import useSecure from "../Hooks/useSecure";
+import { useNavigate } from "react-router-dom";
 
 const divisions = [
   "Dhaka",
@@ -26,6 +27,7 @@ const races = [
 ;
 
 const EditBiodata = () => {
+  const navigate = useNavigate();
   const axiosSecure = useSecure();
   const { user } = useContext(ContextApi);
   const [formData, setFormData] = useState({
@@ -62,7 +64,10 @@ const EditBiodata = () => {
           title: "Done!",
           text: `Bio Added Successfully!`,
           icon: "success",
-        });
+        }).then(() => {
+          window.location.reload();
+      });
+      navigate('/dashboard')
       }
     });
     // Reset form

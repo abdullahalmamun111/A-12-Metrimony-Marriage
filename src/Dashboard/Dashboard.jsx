@@ -147,7 +147,7 @@ const Dashboard = () => {
                 Create Your Biodata
               </NavLink>}
               <NavLink
-                to="/dashboard/view-biodata"
+                to={`/dashboard/view-biodata/${user.email}`}
                 className={({ isActive }) =>
                   isActive
                     ? "block bg-blue-700 rounded-md px-4 py-3 font-medium shadow-md"

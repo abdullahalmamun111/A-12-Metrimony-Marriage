@@ -1,26 +1,20 @@
 import React, { useContext } from "react";
-import useAllUser from "../Hooks/useAllUser";
+import { useLoaderData } from "react-router-dom";
 import { ContextApi } from "../AuthProvider/AuthContext";
 import Swal from "sweetalert2";
-import useSecure from "../Hooks/useSecure";
 import usePublic from "../Hooks/usePublic";
 
-const ViewBiodata = () => {
-  const { allUser } = useAllUser(); // All biodata fetched
+const ViewloadedData = () => {
+  const loadedData = useLoaderData();
   const { user } = useContext(ContextApi); // Logged-in user information
   const axiosPublic = usePublic();
-  // Filter biodata where email matches logged-in user's email
-  const userBiodata = allUser.filter(
-    (biodata) => biodata.email === user?.email
-  );
 
-
-  const handlePremiumReq = (name, email, biodataId, premiumreqId) => {
-    const data = { name, email, biodataId, premiumreqId };
+  const handlePremiumReq = (name, email, loadedDataId, premiumreqId) => {
+    const data = { name, email, loadedDataId, premiumreqId };
 
     Swal.fire({
       title: "Are you sure?",
-      text: " Are you sure to make you premium",
+      text: "Are you sure to make you premium?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -38,7 +32,7 @@ const ViewBiodata = () => {
           } else {
             Swal.fire({
               title: "Failed!",
-              text: `Your Request Is Aready Pending...!`,
+              text: `Your Request Is Already Pending...!`,
               icon: "error",
             });
           }
@@ -48,113 +42,126 @@ const ViewBiodata = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen w-full">
-      <h1 className="text-3xl font-bold text-blue-700 text-center mb-8">
-        Your Biodata
-      </h1>
-      {userBiodata.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {userBiodata.map((biodata) => (
-            <div
-              key={biodata.biodataId}
-              className="p-6 bg-white rounded-lg shadow-lg hover:shadow-2xl border border-gray-200"
-            >
-              <img
-                src={biodata.profileImage || "https://via.placeholder.com/150"}
-                alt="Profile"
-                className="w-32 h-32 rounded-full mx-auto mb-4"
-              />
-              <h2 className="text-xl font-semibold text-gray-800 mb-2 text-center">
-                {biodata.name}
+    <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center">
+      {loadedData ? (
+        <div className="bg-white shadow-md rounded-lg overflow-hidden max-w-4xl w-full">
+          {/* Header Section */}
+          <div className="bg-blue-600 text-white py-6 px-4 text-center">
+            <h1 className="text-3xl font-bold">{loadedData.name}</h1>
+            <p className="text-lg mt-2">{loadedData.email}</p>
+          </div>
+
+          {/* Profile Section */}
+          <div className="flex flex-col lg:flex-row items-center lg:items-start p-6 space-y-6 lg:space-y-0 lg:space-x-6">
+            {/* Profile Image */}
+            <img
+              src={loadedData.profileImage || "https://via.placeholder.com/150"}
+              alt="Profile"
+              className="w-40 h-40 rounded-full object-cover border-4 border-blue-500"
+            />
+            {/* Basic Details */}
+            <div className="flex-1">
+              <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                Personal Information
               </h2>
-              <div className="text-gray-600">
-                <p>
-                  <span className="font-medium">Biodata Type:</span>{" "}
-                  {biodata.biodataType}
-                </p>
-                <p>
-                  <span className="font-medium">Date of Birth:</span>{" "}
-                  {biodata.dateOfBirth}
-                </p>
-                <p>
-                  <span className="font-medium">Height:</span> {biodata.height}
-                </p>
-                <p>
-                  <span className="font-medium">Weight:</span> {biodata.weight}
-                </p>
-                <p>
-                  <span className="font-medium">Age:</span> {biodata.age}
-                </p>
-                <p>
-                  <span className="font-medium">Occupation:</span>{" "}
-                  {biodata.occupation}
-                </p>
-                <p>
-                  <span className="font-medium">Race (Skin Color):</span>{" "}
-                  {biodata.race}
-                </p>
-                <p>
-                  <span className="font-medium">Father's Name:</span>{" "}
-                  {biodata.fatherName}
-                </p>
-                <p>
-                  <span className="font-medium">Mother's Name:</span>{" "}
-                  {biodata.motherName}
-                </p>
-                <p>
-                  <span className="font-medium">Permanent Division:</span>{" "}
-                  {biodata.permanentDivision}
-                </p>
-                <p>
-                  <span className="font-medium">Present Division:</span>{" "}
-                  {biodata.presentDivision}
-                </p>
-                <p>
-                  <span className="font-medium">Expected Partner Age:</span>{" "}
-                  {biodata.partnerAge}
-                </p>
-                <p>
-                  <span className="font-medium">Expected Partner Height:</span>{" "}
-                  {biodata.partnerHeight}
-                </p>
-                <p>
-                  <span className="font-medium">Expected Partner Weight:</span>{" "}
-                  {biodata.partnerWeight}
-                </p>
-                <p>
-                  <span className="font-medium">Email:</span> {biodata.email}
-                </p>
-                <p>
-                  <span className="font-medium">Mobile:</span> {biodata.mobile}
-                </p>
-              </div>
-              {biodata.userType ? (
-                "Premium User"
+              <ul className="space-y-2 text-gray-700">
+                <li>
+                  <strong>Age:</strong> {loadedData.age}
+                </li>
+                <li>
+                  <strong>Date of Birth:</strong> {loadedData.dateOfBirth}
+                </li>
+                <li>
+                  <strong>Height:</strong> {loadedData.height}
+                </li>
+                <li>
+                  <strong>Weight:</strong> {loadedData.weight}
+                </li>
+                <li>
+                  <strong>Race (Skin Color):</strong> {loadedData.race}
+                </li>
+                <li>
+                  <strong>Occupation:</strong> {loadedData.occupation}
+                </li>
+                <li>
+                  <strong>Mobile:</strong> {loadedData.mobile}
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Family Details */}
+          <div className="px-6 py-4 border-t border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              Family Details
+            </h2>
+            <ul className="space-y-2 text-gray-700">
+              <li>
+                <strong>Father's Name:</strong> {loadedData.fatherName}
+              </li>
+              <li>
+                <strong>Mother's Name:</strong> {loadedData.motherName}
+              </li>
+              <li>
+                <strong>Permanent Division:</strong>{" "}
+                {loadedData.permanentDivision}
+              </li>
+              <li>
+                <strong>Present Division:</strong> {loadedData.presentDivision}
+              </li>
+            </ul>
+          </div>
+
+          {/* Partner Preferences */}
+          <div className="px-6 py-4 border-t border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              Partner Preferences
+            </h2>
+            <ul className="space-y-2 text-gray-700">
+              <li>
+                <strong>Expected Partner Age:</strong> {loadedData.partnerAge}
+              </li>
+              <li>
+                <strong>Expected Partner Height:</strong>{" "}
+                {loadedData.partnerHeight}
+              </li>
+              <li>
+                <strong>Expected Partner Weight:</strong>{" "}
+                {loadedData.partnerWeight}
+              </li>
+            </ul>
+          </div>
+
+          {/* Action Section */}
+          <div className="px-6 py-4 border-t border-gray-200">
+            <div className="flex flex-col items-center">
+              {loadedData.userType ? (
+                <span className="text-green-600 font-bold text-lg">
+                  Premium User
+                </span>
               ) : (
                 <button
-                  className="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700"
                   onClick={() =>
                     handlePremiumReq(
-                      biodata.name,
-                      biodata.email,
-                      biodata.biodataId,
-                      biodata._id
+                      loadedData.name,
+                      loadedData.email,
+                      loadedData.loadedDataId,
+                      loadedData._id
                     )
                   }
                 >
-                  Make Biodata Premium
+                  Make Premium
                 </button>
               )}
             </div>
-          ))}
+          </div>
         </div>
       ) : (
-        <p className="text-red-500 text-center text-xl">
-          No biodata found for your account!
-        </p>
+        <p className="text-red-500 text-xl">No Biodata found for your account!</p>
       )}
     </div>
   );
 };
 
-export default ViewBiodata;
+export default ViewloadedData;

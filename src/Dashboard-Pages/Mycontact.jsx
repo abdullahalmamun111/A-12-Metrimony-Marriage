@@ -5,7 +5,7 @@ import { ContextApi } from "../AuthProvider/AuthContext";
 import usePublic from "../Hooks/usePublic";
 import Swal from "sweetalert2";
 
-const Mycontact = () => {
+const MyContact = () => {
   const axiosSecure = useSecure();
   const axiosPublic = usePublic();
   const { user } = useContext(ContextApi);
@@ -23,8 +23,6 @@ const Mycontact = () => {
   const filteredRequests = requests.filter(
     (request) => request.email === user?.email
   );
-
-  // console.log(filteredRequests)
 
   const handleDeleteRequest = (id, name) => {
     Swal.fire({
@@ -53,57 +51,77 @@ const Mycontact = () => {
   };
 
   return (
-    <div className="p-4 w-full">
-      <h2 className="text-xl text-center font-bold mb-4">My Contact Requests</h2>
+    <div className="min-h-screen bg-gray-100 p-6">
+      <h2 className="text-2xl font-bold text-center mb-6 text-blue-700">
+        My Contact Requests
+      </h2>
       {filteredRequests.length === 0 ? (
-        <p className="text-center">No approved contact requests available.</p>
+        <p className="text-center text-gray-500 text-lg">
+          No approved contact requests available.
+        </p>
       ) : (
-        <table className="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="border border-gray-300 px-4 py-2">Name</th>
-              <th className="border border-gray-300 px-4 py-2">Biodata ID</th>
-              <th className="border border-gray-300 px-4 py-2">Status</th>
-              <th className="border border-gray-300 px-4 py-2">Mobile</th>
-              <th className="border border-gray-300 px-4 py-2">Email</th>
-              <th className="border border-gray-300 px-4 py-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredRequests.map((request) => (
-              <tr key={request._id} className="text-center">
-                <td className="border border-gray-300 px-4 py-2">
-                  {request.bioName}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {request.biodataId}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {request.approved ? "Approved" : "Pending"}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {request.approved ? request.bioMobile : "Hidden"}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {request.approved ? request.bioEmail : "Hidden"}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  <button
-                    className="bg-red-500 text-white px-4 py-1 rounded"
-                    onClick={() =>
-                      handleDeleteRequest(request._id, request.name)
-                    }
-                  >
-                    Delete
-                  </button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-gray-300 bg-white shadow-lg rounded-lg overflow-hidden">
+            <thead>
+              <tr className="bg-blue-100">
+                <th className="border border-gray-300 px-4 py-2 text-left">Name</th>
+                <th className="border border-gray-300 px-4 py-2 text-left">
+                  Biodata ID
+                </th>
+                <th className="border border-gray-300 px-4 py-2 text-left">
+                  Status
+                </th>
+                <th className="border border-gray-300 px-4 py-2 text-left">
+                  Mobile
+                </th>
+                <th className="border border-gray-300 px-4 py-2 text-left">
+                  Email
+                </th>
+                <th className="border border-gray-300 px-4 py-2 text-center">
+                  Actions
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredRequests.map((request) => (
+                <tr key={request._id} className="hover:bg-gray-50">
+                  <td className="border border-gray-300 px-4 py-2">
+                    {request.bioName}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {request.biodataId}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {request.approved ? (
+                      <span className="text-green-600 font-bold">Approved</span>
+                    ) : (
+                      <span className="text-yellow-500 font-bold">Pending</span>
+                    )}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {request.approved ? request.bioMobile : "Hidden"}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {request.approved ? request.bioEmail : "Hidden"}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2 text-center">
+                    <button
+                      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
+                      onClick={() =>
+                        handleDeleteRequest(request._id, request.bioName)
+                      }
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
 };
 
-export default Mycontact;
+export default MyContact;

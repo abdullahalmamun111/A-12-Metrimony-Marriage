@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { ContextApi } from "../AuthProvider/AuthContext";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import usePublic from "../Hooks/usePublic";
 import Swal from "sweetalert2";
 
 const UpdateBio = () => {
   const { user } = useContext(ContextApi);
   const userData = useLoaderData();
-
+  const navigate = useNavigate();
   const divisions = [
     "Dhaka",
     "Chattagram",
@@ -127,6 +127,8 @@ const UpdateBio = () => {
   ];
  
   const axiosPublic = usePublic();
+
+
   const handleSubmit = async(e) => {
 	e.preventDefault();
 	const form = e.target;
@@ -139,6 +141,7 @@ const UpdateBio = () => {
             text: `Your Bio Updated Successfully!`,
             icon: "success"
           });
+		  navigate('/dashboard')
 	}
 
   };
@@ -443,7 +446,7 @@ const UpdateBio = () => {
             <input
               type="email"
               name="email"
-              defaultValue={user.email}
+              value={user.email}
               readOnly
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
