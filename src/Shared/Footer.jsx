@@ -73,7 +73,7 @@ const Footer = () => {
                                 href="https://facebook.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="hover:text-gray-200 transition duration-300 transform hover:scale-110"
+                                className="hover:text-gray-200 text-3xl transition duration-300 transform hover:scale-110"
                                 title="Facebook"
                             >
                                 <FontAwesomeIcon icon={faFacebookF} className="text-blue-600" />
@@ -82,7 +82,7 @@ const Footer = () => {
                                 href="https://twitter.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="hover:text-gray-200 transition duration-300 transform hover:scale-110"
+                                className="hover:text-gray-200 text-3xl transition duration-300 transform hover:scale-110"
                                 title="Twitter"
                             >
                                 <FontAwesomeIcon icon={faTwitter} className="text-blue-400" />
@@ -91,7 +91,7 @@ const Footer = () => {
                                 href="https://instagram.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="hover:text-gray-200 transition duration-300 transform hover:scale-110"
+                                className="hover:text-gray-200 text-3xl transition duration-300 transform hover:scale-110"
                                 title="Instagram"
                             >
                                 <FontAwesomeIcon icon={faInstagram} className="text-pink-500" />
@@ -100,7 +100,7 @@ const Footer = () => {
                                 href="https://linkedin.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="hover:text-gray-200 transition duration-300 transform hover:scale-110"
+                                className="hover:text-gray-200 text-3xl transition duration-300 transform hover:scale-110"
                                 title="LinkedIn"
                             >
                                 <FontAwesomeIcon icon={faLinkedinIn} className="text-blue-700" />
@@ -109,7 +109,7 @@ const Footer = () => {
                                 href="https://youtube.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="hover:text-gray-200 transition duration-300 transform hover:scale-110"
+                                className="hover:text-gray-200 text-3xl transition duration-300 transform hover:scale-110"
                                 title="YouTube"
                             >
                                 <FontAwesomeIcon icon={faYoutube} className="text-red-600" />

@@ -10,11 +10,11 @@ Matrimony Hub is a professional marriage portal designed to help individuals fin
 Access the live site here: [Matrimony Hub](https://conceptual-01-ffa89.web.app/)
 
 ## Client Site GitHub URL
-Access the live site here: [Matrimony Hub](https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-abdullahalmamun111)
+Access the GitHub Client site here: [Matrimony Hub](https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-abdullahalmamun111)
 
 
 ## Server Site GitHub URL
-Access the live site here: [Matrimony Hub](https://github.com/Programming-Hero-Web-Course4/b10a12-server-side-abdullahalmamun111)
+Access the GitHub server site here: [Matrimony Hub](https://github.com/Programming-Hero-Web-Course4/b10a12-server-side-abdullahalmamun111)
 
 ---
 
