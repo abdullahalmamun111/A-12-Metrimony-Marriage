@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import SectionTitle from '../Shared/SectionTitle';
-import useUser from '../Hooks/useUser';
+import useAllUser from '../Hooks/useAllUser';
 import UserCard from './UserCard';
 
 const PremiumMember = () => {
-  const { user } = useUser(); // Original user data
+  const { allUser } = useAllUser();
   const [sortOrder, setSortOrder] = useState('ascending'); // Default sort order
-  const [sortedUsers, setSortedUsers] = useState([]); // Sorted user data
+  const [premiumUsers, setPremiumUsers] = useState([]); // Premium users data
+  const [sortedUsers, setSortedUsers] = useState([]); // Sorted premium users
 
-  // Populate sortedUsers on component mount and whenever `user` or `sortOrder` changes
+  // Filter premium users on component mount
   useEffect(() => {
-    const sorted = [...user].sort((a, b) => {
+    const premiumData = allUser.filter((user) => user.userType === 'premium');
+    setPremiumUsers(premiumData.slice(0, 6)); // Limit to 6 users
+  }, [allUser]);
+
+  // Sort premium users whenever `premiumUsers` or `sortOrder` changes
+  useEffect(() => {
+    const sorted = [...premiumUsers].sort((a, b) => {
       return sortOrder === 'ascending' ? a.age - b.age : b.age - a.age;
     });
     setSortedUsers(sorted);
-  }, [user, sortOrder]);
+  }, [premiumUsers, sortOrder]);
 
   // Handle dropdown change
   const handleSortChange = (event) => {
@@ -23,7 +30,7 @@ const PremiumMember = () => {
 
   return (
     <div>
-      <SectionTitle subtitle={'Meet Our Premium Members'} title={'OUR PREMIUM MEMBER'} />
+      <SectionTitle subtitle={'Meet Our Premium Members'} title={'OUR PREMIUM MEMBERS'} />
 
       {/* Dropdown for Sorting */}
       <div className="flex justify-end px-3 mb-4">

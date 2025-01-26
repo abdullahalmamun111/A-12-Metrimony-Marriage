@@ -5,7 +5,7 @@ const useUser = () => {
 	const [user, setUser] = useState([]);
 
 	useEffect(()=> {
-		fetch('http://localhost:5000/sixBiodata')
+		fetch('https://partner-path-metrimony-server.vercel.app/sixBiodata')
 		.then(res => res.json())
 		.then(data => {
 			setUser(data)

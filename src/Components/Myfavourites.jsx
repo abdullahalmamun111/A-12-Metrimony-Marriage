@@ -47,7 +47,7 @@ const Myfavourites = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className=" w-full">
       <h1 className="text-2xl font-bold mb-4 text-center">My Favourites</h1>
 
       {/* Check if there are any favourites */}

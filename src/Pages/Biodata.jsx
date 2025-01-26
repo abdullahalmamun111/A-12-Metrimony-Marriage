@@ -110,7 +110,7 @@ const BiodatasPage = () => {
       <div className="w-full lg:w-3/4 p-4">
         <h2 className="text-lg font-bold mb-4">All Biodatas</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredBiodatas?.slice(0, 20).map((user) => (
+          {filteredBiodatas?.map((user) => (
             <div
               key={user._id}
               className="border p-4 rounded-lg shadow-lg bg-white"

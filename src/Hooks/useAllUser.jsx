@@ -4,7 +4,7 @@ const useAllUser = () => {
 	const [allUser, setAllUser] = useState([]);
 
 		useEffect(()=> {
-			fetch('http://localhost:5000/allbiodata')
+			fetch('https://partner-path-metrimony-server.vercel.app/allbiodata')
 			.then(res => res.json())
 			.then(data => {
 				setAllUser(data)

@@ -10,7 +10,7 @@ const MakeSuccess = () => {
   const { data: successData = [] } = useQuery({
     queryKey: ['successStory'],
     queryFn: async () => {
-      const res = await axiosSecure.get('/successStory');
+      const res = await axiosSecure.get('/successStoryAdmin');
       return res.data;
     },
   });

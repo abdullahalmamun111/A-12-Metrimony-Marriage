@@ -4,6 +4,8 @@ import loginImg from "../assets/login.jpg";
 import Swal from "sweetalert2";
 import { ContextApi } from "../AuthProvider/AuthContext";
 import usePublic from "../Hooks/usePublic";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle, faFacebookF, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 const Login = () => {
   const axiosPublic = usePublic();
@@ -11,17 +13,17 @@ const Login = () => {
   const navigate = useNavigate();
   const { googleSignIn, signIn } = useContext(ContextApi);
 
-  // google sign In
+  // Google Sign In
   const handleGoogleLogin = () => {
     googleSignIn().then((result) => {
       const userInfo = {
         name: result.user?.displayName,
         email: result.user?.email,
       };
-      axiosPublic.post("/users", userInfo).then((res) => {
+      axiosPublic.post("/users", userInfo).then(() => {
         Swal.fire({
           title: "Success!",
-          text: "Your Sign Up Sucessfull",
+          text: "Your Sign Up Successful",
           icon: "success",
         });
         navigate(location.state ? location.state : "/");
@@ -29,25 +31,25 @@ const Login = () => {
     });
   };
 
-  // sign in with email and password
+  // Sign In with Email and Password
   const handleSignIn = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
     signIn(email, password)
-      .then((result) => {
+      .then(() => {
         Swal.fire({
           title: "Success!",
-          text: "Sign In Sucessfull",
+          text: "Sign In Successful",
           icon: "success",
         });
         navigate(location.state ? location.state : "/");
       })
-      .catch((error) => {
+      .catch(() => {
         Swal.fire({
           title: "Failed!",
-          text: "Sorry Your Information Is Incorrect",
+          text: "Sorry, Your Information Is Incorrect",
           icon: "error",
         });
       });
@@ -57,7 +59,7 @@ const Login = () => {
     <div className="min-h-screen my-4 py-4 bg-gray-100 flex items-center justify-center px-4 lg:px-20">
       <div className="flex flex-col lg:flex-row items-center shadow-lg bg-white rounded-lg overflow-hidden w-full max-w-5xl">
         {/* Left Side with Image */}
-        <div className="w-full lg:w-1/2  flex items-center justify-center p-10">
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-10">
           <img src={loginImg} alt="Login Illustration" className="max-w-full" />
         </div>
         {/* Right Side with Form */}
@@ -98,7 +100,7 @@ const Login = () => {
             </div>
           </form>
 
-          {/* back to home button */}
+          {/* Back to Home Button */}
           <div>
             <Link to={"/"}>
               <button
@@ -127,20 +129,20 @@ const Login = () => {
                 className="flex items-center justify-center w-10 h-10 border border-gray-300 rounded-full hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 aria-label="Sign in with Facebook"
               >
-                <i className="fab fa-facebook-f text-blue-600"></i>
+                <FontAwesomeIcon icon={faFacebookF} className="text-blue-600" />
               </button>
               <button
                 onClick={handleGoogleLogin}
                 className="flex items-center justify-center w-10 h-10 border border-gray-300 rounded-full hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500"
                 aria-label="Sign in with Google"
               >
-                <i className="fab fa-google text-red-600"></i>
+                <FontAwesomeIcon icon={faGoogle} className="text-red-600" />
               </button>
               <button
                 className="flex items-center justify-center w-10 h-10 border border-gray-300 rounded-full hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 aria-label="Sign in with Twitter"
               >
-                <i className="fab fa-twitter text-blue-400"></i>
+                <FontAwesomeIcon icon={faTwitter} className="text-blue-400" />
               </button>
             </div>
           </div>

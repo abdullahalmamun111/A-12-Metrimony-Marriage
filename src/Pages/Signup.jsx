@@ -4,6 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { ContextApi } from "../AuthProvider/AuthContext";
 import usePublic from "../Hooks/usePublic";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebookF, faGoogle, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 const Signup = () => {
   const axiosPublic = usePublic();
@@ -15,21 +17,20 @@ const Signup = () => {
   // google sign In
   const handleGoogleLogin = () => {
     googleSignIn()
-    .then((result) => {
+      .then((result) => {
         const userInfo = {
-            name: result.user?.displayName,
-            email : result.user?.email,
-          }
-          axiosPublic.post('/users', userInfo)
-          .then(res => {
-            Swal.fire({
-              title: "Success!",
-              text: "Your Sign Up Sucessfull",
-              icon: "success"
-            });
-            navigate(location.state? location.state :'/');
-          })
-    });
+          name: result.user?.displayName,
+          email: result.user?.email,
+        };
+        axiosPublic.post("/users", userInfo).then((res) => {
+          Swal.fire({
+            title: "Success!",
+            text: "Your Sign Up Successful",
+            icon: "success",
+          });
+          navigate(location.state ? location.state : "/");
+        });
+      });
   };
 
   const handleCreateUser = (e) => {
@@ -40,24 +41,22 @@ const Signup = () => {
     const email = form.email.value;
     const password = form.password.value;
     createUser(email, password).then((result) => {
-      updateUserProfile(name, photo)
-      .then((result) => {
+      updateUserProfile(name, photo).then((result) => {
         const userInfo = {
-            name,
-            email
-        }
+          name,
+          email,
+        };
 
-        axiosPublic.post('/users', userInfo)
-        .then(res => {
-            if(res.data.insertedId){
-                Swal.fire({
-                    title: "Success!",
-                    text: "Your Sign Up Sucessfull",
-                    icon: "success",
-                  });
-                  navigate(location.state ? location.state : "/");
-            }
-        })
+        axiosPublic.post("/users", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            Swal.fire({
+              title: "Success!",
+              text: "Your Sign Up Successful",
+              icon: "success",
+            });
+            navigate(location.state ? location.state : "/");
+          }
+        });
       });
     });
   };
@@ -142,7 +141,7 @@ const Signup = () => {
             </div>
           </form>
 
-          {/* back to home button */}
+          {/* Back to Home Button */}
           <div>
             <Link to={"/"}>
               <button
@@ -172,7 +171,7 @@ const Signup = () => {
                 className="flex items-center justify-center w-10 h-10 border border-gray-300 rounded-full hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 aria-label="Sign up with Facebook"
               >
-                <i className="fab fa-facebook-f text-blue-600"></i>
+                <FontAwesomeIcon icon={faFacebookF} className="text-blue-600" />
               </button>
 
               <button
@@ -180,14 +179,14 @@ const Signup = () => {
                 className="flex items-center justify-center w-10 h-10 border border-gray-300 rounded-full hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500"
                 aria-label="Sign up with Google"
               >
-                <i className="fab fa-google text-red-600"></i>
+                <FontAwesomeIcon icon={faGoogle} className="text-red-600" />
               </button>
 
               <button
                 className="flex items-center justify-center w-10 h-10 border border-gray-300 rounded-full hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 aria-label="Sign up with Twitter"
               >
-                <i className="fab fa-twitter text-blue-400"></i>
+                <FontAwesomeIcon icon={faTwitter} className="text-blue-400" />
               </button>
             </div>
           </div>

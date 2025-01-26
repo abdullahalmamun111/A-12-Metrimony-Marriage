@@ -5,24 +5,42 @@ import { ContextApi } from "../AuthProvider/AuthContext";
 import useSecure from "../Hooks/useSecure";
 import Swal from "sweetalert2";
 import usePremium from "../Hooks/usePremium";
+import { useQuery } from "@tanstack/react-query";
+import usePublic from "../Hooks/usePublic";
 
 const Details = () => {
   const { user } = useContext(ContextApi);
   const detailsData = useLoaderData(); // Current biodata details
   const { allUser } = useAllUser(); // All biodatas
   const navigate = useNavigate(); // Navigation hook
-  // const premium = false; 
-  // const [isPremium] = usePremium();
-  // console.log(isPremium)
+  const axiosPublic = usePublic();
 
-  const [isPremium ,setPremium ] = useState(false);
+  const { data: favourites = [], refetch } = useQuery({
+    queryKey: ["favourites"],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/favourites?email=${user.email}`);
+      return res.data;
+    },
+  });
+
+
+    // Fetch all requests
+    const { data: requests = [], } = useQuery({
+      queryKey: ["request"],
+      queryFn: async () => {
+        const res = await axiosPublic.get(`/userReq?email=${user.email}`);
+        return res.data;
+      },
+    });
+
+  const [isPremium, setPremium] = useState(false);
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/premiumReq/premium/${user.email}`)
+      fetch(`https://partner-path-metrimony-server.vercel.app/premiumReq/premium/${user.email}`)
         .then((res) => res.json())
         .then((data) => {
-          setPremium(data.premium)
+          setPremium(data.premium);
         })
         .catch((error) => console.error("Error fetching data:", error));
     }
@@ -53,6 +71,9 @@ const Details = () => {
     biodataId,
   } = detailsData;
 
+  const isExist = favourites.some((fav) => fav.biodataId === biodataId);
+  const isReqExist = requests.some((req) =>req.biodataId === biodataId)
+
   // Get similar biodatas (same biodataType)
   const similarBiodatas = allUser
     ?.filter((user) => user.biodataType === biodataType && user._id !== _id)
@@ -66,18 +87,19 @@ const Details = () => {
       permanentDivision,
       occupation,
       name,
-      email: user.email
+      email: user.email,
     };
-    axiosSecure.post("/favourites", favoriteItem)
-	.then((res) => {
-      if (res.data.insertedId) {
-        Swal.fire({
-          title: "Done!",
-          text: `${name} Added Your Favourites!`,
-          icon: "success",
-        });
-      }
-    });
+      axiosSecure.post("/favourites", favoriteItem).then((res) => {
+        if (res.data.insertedId) {
+          Swal.fire({
+            title: "Done!",
+            text: `${name} Already Added Your Favourites!`,
+            icon: "success",
+          });
+          refetch();
+        }
+      });
+    
   };
 
   // Handle Request Contact Information
@@ -89,11 +111,7 @@ const Details = () => {
     <div className="p-4">
       {/* Biodata Details */}
       <div className="border rounded-lg p-4 mt-16 shadow-lg bg-white mb-8">
-        <img
-          src={profileImage}
-          alt={name}
-          className="w-[400px] rounded mb-4"
-        />
+        <img src={profileImage} alt={name} className="w-[400px] rounded mb-4" />
         <h2 className="text-2xl font-bold mb-2">{name}</h2>
         <p>
           <strong>Biodata ID:</strong> {biodataId}
@@ -158,23 +176,33 @@ const Details = () => {
         )}
 
         {/* Add to Favourites Button */}
-        <button
+        {isExist ?<button
+          disabled
+          className="mt-4 text-gray-500 px-4 py-2 rounded shadow-md"
+        >
+          Already Added Favourites
+        </button> :<button
           onClick={handleAddToFavourites}
           className="mt-4 bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-600"
         >
           Add to Favourites
-        </button>
+        </button>}
 
         {/* Request Contact Information Button */}
         {!isPremium && (
           <Link to={`/checkout/${_id}`}>
-		  <button
-            onClick={handleRequestContactInfo}
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600 ml-4"
-          >
-            Request Contact Information
-          </button>
-		  </Link>
+            {isReqExist ? <button
+              disabled
+              className="mt-4 text-gray-500 px-4 py-2 rounded shadow-md"
+            >
+              Request Contact Information
+            </button> : <button
+              onClick={handleRequestContactInfo}
+              className="mt-4 bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600 ml-4"
+            >
+              Request Contact Information
+            </button>}
+          </Link>
         )}
       </div>
 

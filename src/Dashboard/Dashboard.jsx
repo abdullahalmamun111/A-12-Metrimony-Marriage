@@ -12,6 +12,7 @@ import { ContextApi } from "../AuthProvider/AuthContext";
 import { Helmet } from "react-helmet-async";
 import { FiMenu } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
+import useAllUser from "../Hooks/useAllUser";
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
@@ -19,6 +20,10 @@ const Dashboard = () => {
   const { logOut } = useContext(ContextApi);
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar toggle state
+  const {allUser} = useAllUser();
+  const {user} = useContext(ContextApi);
+  
+  const isAlreadyCreate = allUser.some(singleUser => singleUser.email ===user.email)
 
   // Check if the right-side content should be blank (no content loaded in the outlet yet)
   const isDefault =
@@ -122,8 +127,8 @@ const Dashboard = () => {
             </>
           ) : (
             <>
-              <NavLink
-                to="/dashboard/biodata"
+              {isAlreadyCreate ? <NavLink
+                to={`/dashboard/update/${user.email}`}
                 className={({ isActive }) =>
                   isActive
                     ? "block bg-blue-700 rounded-md px-4 py-3 font-medium shadow-md"
@@ -131,7 +136,16 @@ const Dashboard = () => {
                 }
               >
                 Edit Biodata
-              </NavLink>
+              </NavLink> :<NavLink
+                to="/dashboard/biodata"
+                className={({ isActive }) =>
+                  isActive
+                    ? "block bg-blue-700 rounded-md px-4 py-3 font-medium shadow-md"
+                    : "block hover:bg-blue-600 rounded-md px-4 py-3"
+                }
+              >
+                Create Your Biodata
+              </NavLink>}
               <NavLink
                 to="/dashboard/view-biodata"
                 className={({ isActive }) =>
@@ -196,7 +210,7 @@ const Dashboard = () => {
 
       {/* Menu Icon for Small Devices */}
       <button
-        className="fixed top-4 left-4 text-3xl text-blue-600 md:hidden z-50"
+        className="fixed top-8 left-4 text-3xl text-blue-600 md:hidden z-50"
         onClick={toggleSidebar}
       >
         <FiMenu />
@@ -209,7 +223,7 @@ const Dashboard = () => {
             {isAdmin ? "Admin Dashboard" : "User Dashboard"}
           </h1>
         </div>
-        <div className="p-4 bg-gray-200 min-h-screen items-center justify-center flex">
+        <div className="p-4 bg-gray-200 min-h-screen">
           {isDefault ? (
             <div className="flex items-center justify-center h-full">
               <p className="text-xl text-center text-gray-600">

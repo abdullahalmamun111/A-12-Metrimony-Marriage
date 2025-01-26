@@ -19,8 +19,10 @@ const ManageUsers = () => {
   });
 
   // Handlers for making admin and premium
-  const handleMakeAdmin = async (id, name) => {
-    axiosSecure.patch(`/premiumReq/admin/${id}`).then((res) => {
+  const handleMakeAdmin = async (id, name,email) => {
+    axiosSecure.patch(`/premiumReq/admin/${id}`)
+    axiosSecure.patch(`/users/${email}`)
+    .then((res) => {
       if (res.data.modifiedCount > 0) {
         refetch();
         Swal.fire({
@@ -85,7 +87,7 @@ const ManageUsers = () => {
                       <span className="text-green-600 font-medium">Already Admin</span>
                     ) : (
                       <button
-                        onClick={() => handleMakeAdmin(user._id, user.name)}
+                        onClick={() => handleMakeAdmin(user._id, user.name,user.email)}
                         className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
                       >
                         Make Admin

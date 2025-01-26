@@ -5,7 +5,7 @@ import useSecure from "../Hooks/useSecure";
 
 const divisions = [
   "Dhaka",
-  "Chattagra",
+  "Chattagram",
   "Rangpur",
   "Barisal",
   "Khulna",
@@ -13,10 +13,17 @@ const divisions = [
   "Sylhet",
 ];
 
-const weights = ["40kg", "50kg", "60kg", "70kg", "80kg"];
-const heights = ["4'5", "5'0", "5'5", "6'0", "6'5"];
+const weights = ["40kg", "41kg", "42kg", "43kg", "44kg", "45kg", "46kg", "47kg", "48kg", "49kg", "50kg", "51kg", "52kg", "53kg", "54kg", "55kg", "56kg", "57kg", "58kg", "59kg", "60kg", "61kg", "62kg", "63kg", "64kg", "65kg", "66kg", "67kg", "68kg", "69kg", "70kg", "71kg", "72kg", "73kg", "74kg", "75kg", "76kg", "77kg", "78kg", "79kg", "80kg", "81kg", "82kg", "83kg", "84kg", "85kg", "86kg", "87kg", "88kg", "89kg", "90kg", "91kg", "92kg", "93kg", "94kg", "95kg", "96kg", "97kg", "98kg", "99kg", "100kg"]
+;
+const heights = ["4'5","4'6","4'7","4'8","4'9", "5'0","5'1","5'2","5'3","5'4", "5'5", "6'0","6'1", "6'2", "6'3", "6'4",  "6'5"];
 const occupations = ["Student", "Engineer", "Doctor", "Business", "Other"];
-const races = ["Fair", "Medium", "Dark"];
+const races = [
+  "Fair", "Very Fair", "Medium", "Light", "Tan", "Olive", "Brown", 
+  "Deep Brown", "Dark", "Ebony", "Pale", "Pinkish", "Golden", 
+  "Peach", "Ruddy", "Dusky", "Ivory", "Beige", "Honey", 
+  "Caramel", "Mocha", "Amber"
+]
+;
 
 const EditBiodata = () => {
   const axiosSecure = useSecure();

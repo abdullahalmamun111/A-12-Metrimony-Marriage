@@ -14,34 +14,38 @@ const ViewBiodata = () => {
     (biodata) => biodata.email === user?.email
   );
 
-  console.log(userBiodata)
-  
-  const handlePremiumReq = (name,email,biodataId,premiumreqId) => {
-	const data = {name,email,biodataId,premiumreqId}
 
-	Swal.fire({
-		title: "Are you sure?",
-		text: " Are you sure to make you premium",
-		icon: "warning",
-		showCancelButton: true,
-		confirmButtonColor: "#3085d6",
-		cancelButtonColor: "#d33",
-		confirmButtonText: "Yes, Sure!"
-	  }).then((result) => {
-		if (result.isConfirmed) {
-			axiosPublic.post('/premiumReq',data)
-				.then((res) => {
-				  if (res.data.insertedId) {
-					Swal.fire({
-					  title: "Done!",
-					  text: `Your Request Is been Processed!`,
-					  icon: "success",
-					});
-				  }
-				});
-		}
-	  });
-  }
+  const handlePremiumReq = (name, email, biodataId, premiumreqId) => {
+    const data = { name, email, biodataId, premiumreqId };
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: " Are you sure to make you premium",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Sure!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosPublic.post("/premiumReq", data).then((res) => {
+          if (res.data.insertedId) {
+            Swal.fire({
+              title: "Done!",
+              text: `Your Request Is been Processed!`,
+              icon: "success",
+            });
+          } else {
+            Swal.fire({
+              title: "Failed!",
+              text: `Your Request Is Aready Pending...!`,
+              icon: "error",
+            });
+          }
+        });
+      }
+    });
+  };
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen w-full">
@@ -56,10 +60,7 @@ const ViewBiodata = () => {
               className="p-6 bg-white rounded-lg shadow-lg hover:shadow-2xl border border-gray-200"
             >
               <img
-                src={
-                  biodata.profileImage ||
-                  "https://via.placeholder.com/150"
-                }
+                src={biodata.profileImage || "https://via.placeholder.com/150"}
                 alt="Profile"
                 className="w-32 h-32 rounded-full mx-auto mb-4"
               />
@@ -127,12 +128,23 @@ const ViewBiodata = () => {
                   <span className="font-medium">Mobile:</span> {biodata.mobile}
                 </p>
               </div>
-              {biodata.userType ? 'Premium User' :<button
-                className="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                onClick={()=> handlePremiumReq(biodata.name,biodata.email,biodata.biodataId,biodata._id)}
-              >
-                Make Biodata Premium
-              </button>}
+              {biodata.userType ? (
+                "Premium User"
+              ) : (
+                <button
+                  className="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  onClick={() =>
+                    handlePremiumReq(
+                      biodata.name,
+                      biodata.email,
+                      biodata.biodataId,
+                      biodata._id
+                    )
+                  }
+                >
+                  Make Biodata Premium
+                </button>
+              )}
             </div>
           ))}
         </div>

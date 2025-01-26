@@ -14,7 +14,7 @@ const Mycontact = () => {
   const { data: requests = [], refetch } = useQuery({
     queryKey: ["request"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/request");
+      const res = await axiosSecure.get("/requestUser");
       return res.data;
     },
   });

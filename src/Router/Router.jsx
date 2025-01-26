@@ -21,6 +21,8 @@ import GotMarried from '../Dashboard-Pages/GotMarried';
 import MakeSuccess from '../Dashboard-Pages/MakeSuccess';
 import About from '../Pages/About';
 import Contact from '../Pages/Contact';
+import AdminRoute from '../Shared/AdminRoute';
+import UpdateBio from '../Dashboard-Pages/UpdateBio';
 
 
 
@@ -43,22 +45,22 @@ import Contact from '../Pages/Contact';
 			},
 			{
 				path: 'biodatas',
-				element:<PrivateRoute><Biodata></Biodata></PrivateRoute>
+				element:<Biodata></Biodata>
 			},
 			{
 				path: 'biodatas/details/:id',
 				element: <PrivateRoute><Details></Details></PrivateRoute>,
-				loader: ({params}) => fetch(`http://localhost:5000/details/${params.id}`)
+				loader: ({params}) => fetch(`https://partner-path-metrimony-server.vercel.app/details/${params.id}`)
 			},
 			{
 				path: '/details/:id',
 				element: <PrivateRoute><Details></Details></PrivateRoute>,
-				loader: ({params}) => fetch(`http://localhost:5000/details/${params.id}`)
+				loader: ({params}) => fetch(`https://partner-path-metrimony-server.vercel.app/details/${params.id}`)
 			},
 			{
 				path:'/checkout/:id',
 				element: <PrivateRoute><Payment></Payment></PrivateRoute>,
-				loader: ({params}) => fetch(`http://localhost:5000/details/${params.id}`)
+				loader: ({params}) => fetch(`https://partner-path-metrimony-server.vercel.app/details/${params.id}`)
 			},
 			{
 				path: '/about',
@@ -80,6 +82,11 @@ import Contact from '../Pages/Contact';
 					element: <PrivateRoute><EditBiodata></EditBiodata></PrivateRoute>
 				},
 				{
+					path: '/dashboard/update/:email',
+					element: <PrivateRoute><UpdateBio></UpdateBio></PrivateRoute>,
+					loader: ({params}) => fetch(`https://partner-path-metrimony-server.vercel.app/biodata/update/${params.email}`)
+				},
+				{
 					path: '/dashboard/favourites',
 					element: <PrivateRoute><Myfavourites></Myfavourites></PrivateRoute>
 				},
@@ -89,7 +96,7 @@ import Contact from '../Pages/Contact';
 				},
 				{
 					path:'/dashboard/manage-users',
-					element: <PrivateRoute><ManageUsers></ManageUsers></PrivateRoute>
+					element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
 				},
 				{
 					path: '/dashboard/view-biodata',
@@ -101,7 +108,7 @@ import Contact from '../Pages/Contact';
 				},
 				{
 					path: '/dashboard/admin',
-					element: <PrivateRoute><Admindashboard></Admindashboard></PrivateRoute>
+					element: <AdminRoute><Admindashboard></Admindashboard></AdminRoute>
 				},
 				{
 					path: '/dashboard/contact-requests',
@@ -113,7 +120,7 @@ import Contact from '../Pages/Contact';
 				},
 				{
 					path: '/dashboard/makestory',
-					element: <PrivateRoute><MakeSuccess></MakeSuccess></PrivateRoute>
+					element: <AdminRoute><MakeSuccess></MakeSuccess></AdminRoute>
 				}
 				
 			]
