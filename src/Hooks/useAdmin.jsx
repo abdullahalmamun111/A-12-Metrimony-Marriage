@@ -6,6 +6,8 @@ import { useQuery } from '@tanstack/react-query';
 const useAdmin = () => {
 	const {user} = useContext(ContextApi)
 	const axiosSecure = useSecure();
+
+	
 	const {data: isAdmin,isPending:isAdminPending} = useQuery({
 		queryKey: [user?.email, 'Admin'],
 		queryFn: async() => {

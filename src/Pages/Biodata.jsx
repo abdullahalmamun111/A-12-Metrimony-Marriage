@@ -1,15 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAllUser from "../Hooks/useAllUser";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { useQuery } from "@tanstack/react-query";
+import usePublic from "../Hooks/usePublic";
 
 const BiodatasPage = () => {
-  const { allUser } = useAllUser();
+  const [itemsPerPage , setItemPerpage] = useState(10)
+  const [currentPage, setCurrentPage] = useState(0)
+  const [allBio, setAllBio] = useState(0);
+  // const { allUser } = useAllUser();
+
+  const axiosPublic = usePublic();
+
+  const {data: allUser = [] , refetch} = useQuery({
+    queryKey:[currentPage,itemsPerPage,'allbioForPagination'],
+    queryFn: async() => {
+      const res = await axiosPublic.get(`/allbioForPagination?page=${currentPage}&size=${itemsPerPage}`)
+      return res.data;
+    }
+  })
+
+   useEffect(() => {
+    fetch('https://partner-path-metrimony-server.vercel.app/bioDataCount')
+    .then(res => res.json())
+    .then(data => {
+      setAllBio(data.count)
+    })
+   },[])
+
+  const totalBio = allBio;
+  const numberOfPages = Math.ceil(totalBio / itemsPerPage);
+  const pages = [...Array(numberOfPages).keys()];
+
+
   const [filters, setFilters] = useState({
     ageRange: [0, 100],
     biodataType: "",
     division: "",
   });
+  
+  // handle page no
+  const handlePageno = (e) => {
+    const val = parseInt(e.target.value)
+    setItemPerpage(val)
+    setCurrentPage(0)
+    refetch();
+  }
+
 
   // Handle filter changes
   const handleFilterChange = (key, value) => {
@@ -32,6 +70,19 @@ const BiodatasPage = () => {
 
     return matchesAge && matchesType && matchesDivision;
   });
+
+  // handle previous Page
+  const handlePrevPage = () => {
+    if(currentPage > 0 ) {
+      setCurrentPage(currentPage - 1)
+    }
+  }
+// handle Next Page
+  const handleNextPage = () => {
+    if(currentPage < pages.length -1){
+      setCurrentPage(currentPage + 1)
+    }
+  }
 
   return (
     <div className="flex flex-col mt-16 lg:flex-row">
@@ -143,6 +194,32 @@ const BiodatasPage = () => {
               </Link>
             </div>
           ))}
+        </div>
+        {/* pagination */}
+        <div className="mt-5">
+          <button className="px-4 py-2 mx-1 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50" onClick={handlePrevPage}>Prev</button>
+          {pages.map((page) => (
+            <button
+            onClick={() =>setCurrentPage(page)}
+            className={currentPage === page ? "px-4 py-2 mx-1 text-white bg-yellow-600 rounded-lg hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50": "px-4 py-2 mx-1 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50" }>
+              {page}
+            </button>
+          ))}
+          <button className="px-4 py-2 mx-1 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50" onClick={handleNextPage}>Next</button>
+
+          <select className="px-4 py-2 mx-1 border-2 rounded-md ml-5" onChange={handlePageno} name="" id="">
+            <option value="15">15</option>
+            <option value="14">14</option>
+            <option value="13">13</option>
+            <option value="12">12</option>
+            <option value="11">11</option>
+            <option value="10">10</option>
+            <option value="9">9</option>
+            <option value="8">8</option>
+            <option value="7">7</option>
+            <option value="6">6</option>
+            <option value="5">5</option>
+          </select>
         </div>
       </div>
     </div>
