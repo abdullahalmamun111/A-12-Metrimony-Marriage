@@ -14,7 +14,7 @@ const UserCard = ({ item }) => {
         <img
           src={profileImage}
           alt="Profile"
-          className="w-full bg-center h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110"
+          className="w-full bg-center h-full  transition-transform duration-500 ease-in-out hover:scale-110"
         />
       </div>
 

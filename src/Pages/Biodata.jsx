@@ -160,16 +160,16 @@ const BiodatasPage = () => {
       {/* Biodata List Section */}
       <div className="w-full lg:w-3/4 p-4">
         <h2 className="text-lg font-bold mb-4">All Biodatas</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {filteredBiodatas?.map((user) => (
             <div
               key={user._id}
-              className="border p-4 rounded-lg shadow-lg bg-white"
+              className="border  transition-transform duration-500 ease-in-out hover:scale-105 p-4 rounded-lg shadow-lg bg-white"
             >
               <img
                 src={user.profileImage}
                 alt={user.name}
-                className="w-full h-32 object-cover mb-4 rounded"
+                className="w-full h-48 object-cover  mb-4 rounded"
               />
               <h3 className="font-bold text-lg mb-2">{user.name}</h3>
               <p>

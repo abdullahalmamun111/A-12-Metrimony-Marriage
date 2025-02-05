@@ -218,7 +218,7 @@ const Details = () => {
               <img
                 src={user.profileImage}
                 alt={user.name}
-                className="w-full h-32 object-cover mb-4 rounded"
+                className="w-full h-48  transition-transform duration-500 ease-in-out hover:scale-105 mb-4 rounded"
               />
               <h3 className="font-bold text-lg mb-2">{user.name}</h3>
               <p>
