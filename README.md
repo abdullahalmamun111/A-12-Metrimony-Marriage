@@ -4,9 +4,12 @@ Matrimony Hub is a **professional marriage portal** designed to help individuals
 
 ---
 
-<p align="center">
+<!-- <p align="center">
   <img src="https://i.ibb.co.com/nsz9XpjW/image.png" alt="Matrimony Hub Banner" width="100%" />
-</p>
+</p> -->
+
+<img src="https://i.ibb.co.com/nsz9XpjW/image.png" alt="Matrimony Hub Banner" width="100%" />
+
 
 
 ## 🚀 Admin Access  
