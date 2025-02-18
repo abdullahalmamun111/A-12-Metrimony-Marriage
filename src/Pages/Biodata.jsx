@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useAllUser from "../Hooks/useAllUser";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useQuery } from "@tanstack/react-query";
 import usePublic from "../Hooks/usePublic";
+import { ThemeContext } from "../ThemeProvider";
 
 const BiodatasPage = () => {
   const [itemsPerPage , setItemPerpage] = useState(10)
   const [currentPage, setCurrentPage] = useState(0)
   const [allBio, setAllBio] = useState(0);
   // const { allUser } = useAllUser();
+  const {theme} = useContext(ThemeContext);
 
   const axiosPublic = usePublic();
 
@@ -85,13 +87,13 @@ const BiodatasPage = () => {
   }
 
   return (
-    <div className="flex flex-col mt-16 lg:flex-row">
+    <div className={`${theme === "dark" ? "bg-gray-900 text-gray-400" : "bg-gray-100"} flex flex-col mt-16 lg:flex-row`}>
       <Helmet>
         <title>Biodata || MetrimonyHub</title>
       </Helmet>
       {/* Filter Section */}
-      <div className="w-full lg:w-1/4 p-4 bg-gray-100">
-        <h2 className="text-lg font-bold mb-4">Filters</h2>
+      <div className="w-full lg:w-1/4 p-4 ">
+        <h2 className="text-3xl font-bold mb-4">Filters</h2>
         {/* Age Filter */}
         <div className="mb-4">
           <label className="block mb-2">Age Range:</label>
@@ -159,7 +161,7 @@ const BiodatasPage = () => {
 
       {/* Biodata List Section */}
       <div className="w-full lg:w-3/4 p-4">
-        <h2 className="text-lg font-bold mb-4">All Biodatas</h2>
+        <h2 className="text-3xl font-bold mb-4">All Biodatas</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {filteredBiodatas?.map((user) => (
             <div

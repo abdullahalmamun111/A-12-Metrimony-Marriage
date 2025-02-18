@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import SectionTitle from '../Shared/SectionTitle';
 import useAllUser from '../Hooks/useAllUser';
 import UserCard from './UserCard';
+import { ThemeContext } from '../ThemeProvider';
 
 const PremiumMember = () => {
   const { allUser } = useAllUser();
   const [sortOrder, setSortOrder] = useState('ascending'); // Default sort order
   const [premiumUsers, setPremiumUsers] = useState([]); // Premium users data
   const [sortedUsers, setSortedUsers] = useState([]); // Sorted premium users
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   // Filter premium users on component mount
   useEffect(() => {
@@ -29,12 +31,12 @@ const PremiumMember = () => {
   };
 
   return (
-    <div>
+    <div className={`${theme === "dark" ? "bg-gray-900 " : "bg-white "}py-4 `}>
       <SectionTitle subtitle={'Meet Our Premium Members'} title={'OUR PREMIUM MEMBERS'} />
 
       {/* Dropdown for Sorting */}
       <div className="flex justify-end px-3 mb-4">
-        <label htmlFor="sortOrder" className="mr-2 font-medium text-gray-600">
+        <label htmlFor="sortOrder" className="mr-2 mt-2 font-medium text-gray-600">
           Sort by Age:
         </label>
         <select
@@ -49,7 +51,7 @@ const PremiumMember = () => {
       </div>
 
       {/* Grid of User Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-5 px-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-5 px-3">
         {sortedUsers.map((item) => (
           <UserCard key={item.biodataId} item={item} />
         ))}

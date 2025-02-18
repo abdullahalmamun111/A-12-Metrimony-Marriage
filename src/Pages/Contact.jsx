@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import SectionTitle from "../Shared/SectionTitle";
 import { Helmet } from "react-helmet-async";
+import { ThemeContext } from "../ThemeProvider";
 
 const Contact = () => {
+  const {theme} = useContext(ThemeContext);
   return (
-    <div className="bg-gray-100 mt-16 py-4 px-6 md:px-12 lg:px-20">
+    <div className={`${theme === "dark" ? "bg-gray-900 text-gray-400" : "bg-gray-100 "} mt-16 py-4 px-6 md:px-12 lg:px-20`}>
       {/* Header Section */}
       <Helmet>
         <title>Contact || MetrimonyHub</title>

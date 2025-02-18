@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import SectionTitle from "../Shared/SectionTitle";
 import { Helmet } from "react-helmet-async";
+import { ThemeContext } from "../ThemeProvider";
 
 const About = () => {
+  const {theme} = useContext(ThemeContext)
   return (
-    <div className="bg-gray-100 py-4 mt-16 px-6 md:px-12 lg:px-20">
+    <div className={`${theme === "dark" ? "bg-gray-900 text-gray-400" : "bg-gray-100 "} py-4 mt-16 px-6 md:px-12 lg:px-20`}>
       <Helmet>
         <title>About || MetrimonyHub</title>
       </Helmet>
@@ -25,8 +27,8 @@ const About = () => {
           className="w-full lg:w-1/2 rounded-lg shadow-lg"
         />
         <div className="lg:w-1/2">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Our Mission</h2>
-          <p className="text-gray-700 text-justify">
+          <h2 className="text-2xl font-bold  mb-4">Our Mission</h2>
+          <p className=" text-justify">
             Matrimony Hub is dedicated to creating meaningful connections
             between individuals who are seeking their perfect match. Our mission
             is to provide a trusted platform where people can meet, interact,
@@ -38,7 +40,7 @@ const About = () => {
 
       {/* Our Values Section */}
       <div className="mb-12">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+        <h2 className="text-2xl font-bold  mb-6 text-center">
           Our Core Values
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -72,10 +74,10 @@ const About = () => {
 
       {/* Call to Action */}
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+        <h2 className="text-2xl font-bold  mb-4">
           Join Us Today!
         </h2>
-        <p className="text-gray-700 mb-6">
+        <p className="mb-6">
           Discover a world of possibilities and start your journey to love and
           happiness with Matrimony Hub.
         </p>

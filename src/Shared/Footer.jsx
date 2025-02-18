@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebookF,
@@ -7,10 +7,12 @@ import {
   faLinkedinIn,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
+import { ThemeContext } from "../ThemeProvider";
 
 const Footer = () => {
+  const {theme} = useContext(ThemeContext)
   return (
-    <footer className="bg-gradient-to-r from-green-700 via-pink-600 to-green-700 text-white">
+    <footer className={`${theme === "dark" ? "bg-gray-900 text-gray-400 " : " bg-gradient-to-r from-green-700 via-pink-600 to-green-700 text-white"} `}>
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-12">
         {/* Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">

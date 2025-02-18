@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FaUserPlus, FaRegClipboard, FaHeart, FaCheck } from 'react-icons/fa';
 import SectionTitle from '../Shared/SectionTitle';
+import { ThemeContext } from '../ThemeProvider';
 
 const HowItWorks = () => {
+   const { theme } = useContext(ThemeContext);
   const steps = [
     {
       id: 1,
@@ -31,7 +33,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="bg-gradient-to-r from-yellow-50 via-white to-pink-50 py-16">
+    <section className={`${theme === "dark" ? "bg-gray-900" : "bg-gradient-to-r from-yellow-50 via-white to-pink-50 py-16"} py-4`}>
       <div className="max-w-7xl mx-auto px-6">
 
 		<SectionTitle title={'How It Works'} subtitle={'Follow these simple steps to find your perfect life partner through our platform.'}>
@@ -42,7 +44,7 @@ const HowItWorks = () => {
           {steps.map((step) => (
             <div
               key={step.id}
-              className="flex flex-col items-center text-center p-6 bg-white shadow-md rounded-lg hover:shadow-xl transition-all duration-300"
+              className="flex flex-col items-center text-center p-6 bg-gray-300 shadow-md rounded-lg hover:shadow-xl transition-all duration-300"
             >
               {/* Icon */}
               <div className="mb-4">{step.icon}</div>

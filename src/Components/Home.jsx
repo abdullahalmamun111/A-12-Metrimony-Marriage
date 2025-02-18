@@ -5,6 +5,8 @@ import HowItWorks from './HowItWorks';
 import SuccessCounter from './SuccessCounter';
 import OurSuccesStory from './OurSuccesStory';
 import { Helmet } from 'react-helmet-async';
+import WhyChoose from './WhyChoose';
+import Faq from './Faq';
 
   
 const Home = () => {
@@ -20,6 +22,8 @@ const Home = () => {
 			<HowItWorks></HowItWorks>
 			<SuccessCounter></SuccessCounter>
 			<OurSuccesStory></OurSuccesStory>
+			<WhyChoose></WhyChoose>
+			<Faq></Faq>
 		</div>
 	);
 };

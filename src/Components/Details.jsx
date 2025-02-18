@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import usePremium from "../Hooks/usePremium";
 import { useQuery } from "@tanstack/react-query";
 import usePublic from "../Hooks/usePublic";
+import { ThemeContext } from "../ThemeProvider";
 
 const Details = () => {
   const { user } = useContext(ContextApi);
@@ -14,6 +15,7 @@ const Details = () => {
   const { allUser } = useAllUser(); // All biodatas
   const navigate = useNavigate(); // Navigation hook
   const axiosPublic = usePublic();
+  const {theme} = useContext(ThemeContext);
 
   const { data: favourites = [], refetch } = useQuery({
     queryKey: ["favourites"],
@@ -108,10 +110,10 @@ const Details = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className={`${theme === "dark" ? "bg-gray-900 text-white": "bg-white"}p-4`}>
       {/* Biodata Details */}
-      <div className="border rounded-lg p-4 mt-16 shadow-lg bg-white mb-8">
-        <img src={profileImage} alt={name} className="w-[400px] rounded mb-4" />
+      <div className={`${theme === "dark" ? "bg-gray-900 text-white" : "bg-white"} border rounded-lg p-4 mt-16 shadow-lg  mb-8 text-center flex justify-center flex-col items-center`}>
+        <img src={profileImage} alt={name} className="w-[500px] h-[400px] rounded mb-4" />
         <h2 className="text-2xl font-bold mb-2">{name}</h2>
         <p>
           <strong>Biodata ID:</strong> {biodataId}
@@ -170,7 +172,7 @@ const Details = () => {
             </p>
           </>
         ) : (
-          <p className="text-gray-600 italic">
+          <p className=" italic">
             Contact information is available for premium members only.
           </p>
         )}
@@ -207,13 +209,13 @@ const Details = () => {
       </div>
 
       {/* Similar Biodatas Section */}
-      <div>
-        <h3 className="text-xl font-bold mb-4">Similar Biodatas</h3>
+      <div className={`${theme === "dark" ? "bg-gray-900 text-white": "bg-white"}`}>
+        <h3 className="text-xl font-bold mb-4 ml-2">Similar Biodatas</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {similarBiodatas?.map((user) => (
             <div
               key={user._id}
-              className="border p-4 rounded-lg shadow-lg bg-white"
+              className="border p-4 rounded-lg shadow-lg "
             >
               <img
                 src={user.profileImage}
