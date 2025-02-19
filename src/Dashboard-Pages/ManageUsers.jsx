@@ -19,10 +19,9 @@ const ManageUsers = () => {
   });
 
   // Handlers for making admin and premium
-  const handleMakeAdmin = async (id, name,email) => {
-    axiosSecure.patch(`/premiumReq/admin/${id}`)
-    axiosSecure.patch(`/users/${email}`)
-    .then((res) => {
+  const handleMakeAdmin = async (id, name, email) => {
+    axiosSecure.patch(`/premiumReq/admin/${id}`);
+    axiosSecure.patch(`/users/${email}`).then((res) => {
       if (res.data.modifiedCount > 0) {
         refetch();
         Swal.fire({
@@ -49,13 +48,13 @@ const ManageUsers = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen w-full">
-      <h1 className="text-2xl font-bold mb-6 text-center text-blue-600">
+    <div className="p-4 md:p-6 bg-gray-50 min-h-screen w-full">
+      <h1 className="text-2xl font-bold mb-4 md:mb-6 text-center text-blue-600">
         Manage Users
       </h1>
 
       {/* Search Bar */}
-      <div className="mb-6 flex justify-center">
+      <div className="mb-4 md:mb-6 flex justify-center">
         <input
           type="text"
           placeholder="Search by name"
@@ -70,31 +69,31 @@ const ManageUsers = () => {
         <table className="w-full border-collapse bg-white shadow-md rounded-lg">
           <thead>
             <tr className="bg-blue-500 text-white">
-              <th className="py-4 px-6 text-left">Name</th>
-              <th className="py-4 px-6 text-left">Email</th>
-              <th className="py-4 px-6 text-center">Make Admin</th>
-              <th className="py-4 px-6 text-center">Make Premium</th>
+              <th className="py-3 px-4 md:py-4 md:px-6 text-left">Name</th>
+              <th className="py-3 px-4 md:py-4 md:px-6 text-left">Email</th>
+              <th className="py-3 px-4 md:py-4 md:px-6 text-center">Make Admin</th>
+              <th className="py-3 px-4 md:py-4 md:px-6 text-center">Make Premium</th>
             </tr>
           </thead>
           <tbody>
             {users.length > 0 ? (
               users.map((user) => (
                 <tr key={user._id} className="hover:bg-gray-50 border-b">
-                  <td className="py-4 px-6">{user.name}</td>
-                  <td className="py-4 px-6">{user.email}</td>
-                  <td className="py-4 px-6 text-center">
+                  <td className="py-3 px-4 md:py-4 md:px-6">{user.name}</td>
+                  <td className="py-3 px-4 md:py-4 md:px-6">{user.email}</td>
+                  <td className="py-3 px-4 md:py-4 md:px-6 text-center">
                     {user.role === "admin" ? (
                       <span className="text-green-600 font-medium">Already Admin</span>
                     ) : (
                       <button
-                        onClick={() => handleMakeAdmin(user._id, user.name,user.email)}
-                        className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+                        onClick={() => handleMakeAdmin(user._id, user.name, user.email)}
+                        className="px-3 py-1 md:px-4 md:py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
                       >
                         Make Admin
                       </button>
                     )}
                   </td>
-                  <td className="py-4 px-6 text-center">
+                  <td className="py-3 px-4 md:py-4 md:px-6 text-center">
                     {user.userType === "premium" ? (
                       <span className="text-yellow-600 font-medium">Already Premium</span>
                     ) : (
@@ -102,7 +101,7 @@ const ManageUsers = () => {
                         onClick={() =>
                           handleMakePremium(user.premiumreqId, user.name, user._id)
                         }
-                        className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
+                        className="px-3 py-1 md:px-4 md:py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
                       >
                         Make Premium
                       </button>
