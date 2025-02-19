@@ -98,7 +98,7 @@ const EditBiodata = () => {
 
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
           <h1 className="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
-            Create Your Biodata
+          Please provide all required information and Create your profile.
           </h1>
 
           <form onSubmit={handleSubmit}>

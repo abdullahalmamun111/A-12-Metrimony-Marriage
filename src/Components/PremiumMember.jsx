@@ -51,7 +51,7 @@ const PremiumMember = () => {
       </div>
 
       {/* Grid of User Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-5 px-3">
+      <div className="grid grid-cols-2 md:grid-cols-3  gap-4 my-5 px-16">
         {sortedUsers.map((item) => (
           <UserCard key={item.biodataId} item={item} />
         ))}

@@ -12,7 +12,7 @@ import { ThemeContext } from "../ThemeProvider";
 const Footer = () => {
   const {theme} = useContext(ThemeContext)
   return (
-    <footer className={`${theme === "dark" ? "bg-gray-900 text-gray-400 " : " bg-gradient-to-r from-blue-600  to-blue-400 text-white"} `}>
+    <footer className={`${theme === "dark" ? "bg-gray-900 text-gray-400 " : " bg-gradient-to-r from-purple-400 via-pink-500 to-red-400 text-white"} `}>
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-12">
         {/* Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">

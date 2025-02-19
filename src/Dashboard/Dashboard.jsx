@@ -152,7 +152,7 @@ const Dashboard = () => {
                       : "block hover:bg-blue-600 rounded-md px-4 py-3"
                   }
                 >
-                  Create Your Biodata
+                  Create Your Profile
                 </NavLink>
               )}
               <NavLink
@@ -163,7 +163,7 @@ const Dashboard = () => {
                     : "block hover:bg-blue-600 rounded-md px-4 py-3"
                 }
               >
-                View Biodata
+                View Profile
               </NavLink>
               <NavLink
                 to="/dashboard/contact-requests"
@@ -238,7 +238,7 @@ const Dashboard = () => {
             theme === "dark" ? "bg-gray-900" : "bg-yellow-400"
           } flex fixed top-0 w-full gap-4`}
         >
-          <h1 className="text-2xl ml-[20%] md:text-3xl rounded-md font-bold py-4 text-gray-600 text-center">
+          <h1 className="text-2xl ml-[30%] md:text-3xl rounded-md font-bold py-4 text-gray-600 text-center">
             {isAdmin ? "Admin Dashboard" : "User Dashboard"}
           </h1>
 
